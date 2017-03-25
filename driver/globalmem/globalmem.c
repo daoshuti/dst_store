@@ -15,6 +15,8 @@
 #define MEM_CLEAR 0x1  /*清0全局内存*/
 #define GLOBALMEM_MAJOR 0    /*预设的globalmem的主设备号*/
 
+#define init_MUTEX(sem)	 sema_init(sem, 1)
+
 static int globalmem_major = GLOBALMEM_MAJOR;
 module_param(globalmem_major, int, S_IRUGO);
 
@@ -43,8 +45,7 @@ int globalmem_release(struct inode *inode, struct file *filp)
 }
 
 /* ioctl设备控制函数 */
-static int globalmem_ioctl(struct inode *inodep, struct file *filp, unsigned
-  int cmd, unsigned long arg)
+static long globalmem_ioctl (struct file *filp, unsigned int cmd, unsigned long arg)
 {
   struct globalmem_dev *dev = filp->private_data; /*获得设备结构体指针*/
 
@@ -188,7 +189,7 @@ static const struct file_operations globalmem_fops =
   .llseek = globalmem_llseek,
   .read = globalmem_read,
   .write = globalmem_write,
-  .ioctl = globalmem_ioctl,
+  .unlocked_ioctl = globalmem_ioctl,
   .open = globalmem_open,
   .release = globalmem_release,
 };
@@ -211,6 +212,7 @@ static int __init globalmem_init(void)
 {
   int result;
   dev_t devno = MKDEV(globalmem_major, 0);
+  printk("[globalmem] module init start.\n");
 
   /* 申请设备号*/
   if (globalmem_major)
@@ -234,6 +236,7 @@ static int __init globalmem_init(void)
 
   globalmem_setup_cdev(globalmem_devp, 0);
   init_MUTEX(&globalmem_devp->sem);   /*初始化信号量*/
+  printk("[globalmem] module init success\n");
   return 0;
 
 fail_malloc:
@@ -244,9 +247,11 @@ fail_malloc:
 /*模块卸载函数*/
 static void __exit globalmem_exit(void)
 {
+  printk("[globalmem] module exit start\n");
   cdev_del(&globalmem_devp->cdev);   /*注销cdev*/
   kfree(globalmem_devp);     /*释放设备结构体内存*/
   unregister_chrdev_region(MKDEV(globalmem_major, 0), 1); /*释放设备号*/
+  printk("[globalmem] module exit success\n");
 }
 
 MODULE_AUTHOR("Song Baohua");
