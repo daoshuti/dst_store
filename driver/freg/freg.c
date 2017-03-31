@@ -5,6 +5,7 @@
 #include <linux/proc_fs.h>
 #include <linux/device.h>
 #include <asm/uaccess.h>
+#include <linux/slab.h>
 
 #include "freg.h"
 #define FREG_CONFIG_PROC 		1
