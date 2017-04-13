@@ -50,14 +50,14 @@ set   shiftwidth=4
 set   showcmd
 set   smartindent
 set   smartcase
-set   tabstop=4
+set   tabstop=4 " 制表符为4
 set   termencoding=utf-8
 set   textwidth=80
 set   whichwrap=h,l
 set   wildignore=*.bak,*.o,*.e,*~
 set   wildmenu
 set   wildmode=list:longest,full
-set   nowrap
+set   nowrap " 禁止文字自动换行
 " --------------------------------------------------------------------
 " AUTO COMMANDS: {{{1
 " --------------------------------------------------------------------
