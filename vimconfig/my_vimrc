@@ -1,0 +1,116 @@
+" --------------------------------------------------------------------
+" Owner: 王涵
+" Email: daoshuti@163.com
+" Github: https://github.com/daoshuti
+" --------------------------------------------------------------------
+" GENERAL SETTINGS: {{{1
+" ---------------------------------------------------------------------
+" To use VIM settings, out of VI compatible mode.
+set nocompatible
+" Enable file type detection.
+filetype plugin indent on
+" Syntax highlighting.
+syntax on
+" Setting colorscheme
+"color mycolor
+" Other settings.
+set   autoindent
+set   autoread
+set   autowrite
+set   background=dark
+set   backspace=indent,eol,start
+set   nobackup
+set   cindent
+set   cinoptions=:0
+set   cursorline
+set   completeopt=longest,menuone
+set   noexpandtab
+set   fileencodings=utf-8,gb2312,gbk,gb18030
+set   fileformat=unix
+set   foldenable
+set   foldmethod=marker
+set   guioptions-=T
+set   guioptions-=m
+set   guioptions-=r
+set   guioptions-=l
+set   helpheight=10
+set   helplang=cn
+set   hidden
+set   history=100
+set   hlsearch
+set   ignorecase
+set   incsearch
+set   laststatus=2
+set   mouse=a "可以使用鼠标
+set   number " 显示行号
+set   pumheight=10
+set   ruler
+set   scrolloff=5
+set   shiftwidth=4
+set   showcmd
+set   smartindent
+set   smartcase
+set   tabstop=4
+set   termencoding=utf-8
+set   textwidth=80
+set   whichwrap=h,l
+set   wildignore=*.bak,*.o,*.e,*~
+set   wildmenu
+set   wildmode=list:longest,full
+set   nowrap
+" --------------------------------------------------------------------
+" AUTO COMMANDS: {{{1
+" --------------------------------------------------------------------
+autocmd BufNewFile *.c,*.cpp,*.sh,*.py,*.java exec ":call SetTitle()"                                                                                       
+"新建.py
+"定义函数SetTitle，自动插入文件头
+func SetTitle()
+		"如果文件类型为.c或者.cpp文件
+        if (&filetype == 'c' || &filetype == 'cpp')
+                call setline(1, "/*************************************************************************")  
+                call setline(2, "\ @Author: wanghan")  
+                call setline(3, "\ @Created Time : ".strftime("%c"))  
+                call setline(4, "\ @File Name: ".expand("%"))  
+                call setline(5, "\ @Description:")  
+                call setline(6, " ************************************************************************/")  
+                call setline(7,"")  
+        endif
+		"如果文件类型为.sh文件
+        if &filetype == 'sh'  
+                call setline(1, "\#!/bin/sh")
+                call setline(2, "\# Author: wanghan")
+                call setline(3, "\# Created Time : ".strftime("%c"))
+                call setline(4, "\# File Name: ".expand("%"))
+                call setline(5, "\# Description:")
+                call setline(6,"")
+        endif
+        "如果文件类型为.py文件
+        if &filetype == 'python'
+                call setline(1, "\#!/usr/bin/env python")
+                call setline(2, "\# -*- coding=utf8 -*-")
+                call setline(3, "\"\"\"")
+                call setline(4, "\# Author: wanghan")
+                call setline(5, "\# Created Time : ".strftime("%c"))
+                call setline(6, "\# File Name: ".expand("%"))
+                call setline(7, "\# Description:")
+                call setline(8, "\"\"\"")
+                call setline(9,"")
+        endif
+		"如果文件类型为.java文件
+        if &filetype == 'java'  
+                call setline(1, "//coding=utf8")  
+                call setline(2, "/**")  
+                call setline(3, "\ *\ @Author: wanghan")  
+                call setline(4, "\ *\ @Created Time : ".strftime("%c"))  
+                call setline(5, "\ *\ @File Name: ".expand("%"))  
+                call setline(6, "\ *\ @Description:")  
+                call setline(7, "\ */")  
+                call setline(8,"")  
+        endif
+endfunc
+" --------------------------------------------------------------------
+" SHORTCUT SETTINGS: {{{1
+" --------------------------------------------------------------------
+" Space to command mode.
+nnoremap <space> :
+vnoremap <space> :
