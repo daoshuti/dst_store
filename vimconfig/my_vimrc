@@ -77,7 +77,7 @@ func SetTitle()
         endif
 		"如果文件类型为.sh文件
         if &filetype == 'sh'  
-                call setline(1, "\#!/bin/sh")
+                call setline(1, "\#!/bin/bash")
                 call setline(2, "\# Author: wanghan")
                 call setline(3, "\# Created Time : ".strftime("%c"))
                 call setline(4, "\# File Name: ".expand("%"))
