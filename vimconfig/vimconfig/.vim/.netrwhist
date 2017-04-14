@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/wanghan/work/cm895/d6/arm11/device/xiaomi/ulysse/images'
+let g:netrw_dirhist_2='/home/wanghan/work/cm895/d6/arm11/out/target/product/ulysse/obj/KERNEL_OBJ'
+let g:netrw_dirhist_3='/home/wanghan/work/cm895/d6/arm11/kernel/drivers/input/touchscreen/focaltech_touch'
+let g:netrw_dirhist_4='/home/wanghan/tmp/ramdisk/res'
+let g:netrw_dirhist_5='/home/wanghan/.oh-my-zsh'
+let g:netrw_dirhist_6='/home/wanghan/Desktop/dst_store/cpp_test/lightpointer'
