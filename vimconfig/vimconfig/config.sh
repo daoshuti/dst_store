@@ -23,7 +23,6 @@ function config_vim()
 	cp ./.vimrc $HOME 
 
 	#生成tags文件
-#	sudo cp ctags /bin 
 	echo "Make tags in /usr/include"
 	cd /usr/include
 	sudo ctags -I __THROW -I __THROWNL -I __nonnull -R --c-kinds=+p --fields=+iaS --extra=+q
