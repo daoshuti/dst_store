@@ -143,6 +143,7 @@ nmap <silent> <leader>cd :exe 'cd ' . OpenDir<cr>:pwd<cr>
 
 " PLUGIN SETTINGS: {{{1
 " taglist.vim
+let Tlist_Show_One_File=1
 let g:Tlist_Auto_Update=1
 let g:Tlist_Process_File_Always=1
 let g:Tlist_Exit_OnlyWindow=1
@@ -177,13 +178,16 @@ if has("gdb")
 	let g:vimgdb_debug_file=""
 	run macros/gdb_mappings.vim
 endif
+" 配置CrtlP插件
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 " LookupFile setting
-let g:LookupFile_TagExpr='"./tags.filename"'
-let g:LookupFile_MinPatLength=2
-let g:LookupFile_PreserveLastPattern=0
-let g:LookupFile_PreservePatternHistory=1
-let g:LookupFile_AlwaysAcceptFirst=1
-let g:LookupFile_AllowNewFiles=0
+"let g:LookupFile_TagExpr='"./tags.filename"'
+"let g:LookupFile_MinPatLength=2
+"let g:LookupFile_PreserveLastPattern=0
+"let g:LookupFile_PreservePatternHistory=1
+"let g:LookupFile_AlwaysAcceptFirst=1
+"let g:LookupFile_AllowNewFiles=0
 " Man.vim Man手册插件
 source $VIMRUNTIME/ftplugin/man.vim
 " snipMate 代码补全插件
@@ -206,6 +210,7 @@ nmap  <F2> :TlistToggle<cr>
 nmap  <F3> :NERDTreeToggle<cr>
 nmap  <F4> :MRU<cr>
 "nmap  <F5> <Plug>LookupFile<cr>
+nmap  <F5> :CtrlP<cr>
 "nmap  <F6> :vimgrep /<C-R>=expand("<cword>")<cr>/ **/*.c **/*.h<cr><C-o>:cw<cr>
 nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
 "nmap <F10> :call HLUDSync()<cr>
@@ -256,7 +261,6 @@ nmap <leader>x :tabclose<cr>
 nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
 
-let Tlist_Show_One_File=0
 set noswapfile
 set tags+=/usr/include/tags
 set tags+=./tags
