@@ -12,12 +12,12 @@ filetype plugin indent on " 开启三个功能：文件类型检查、插件、�
 " Syntax highlighting.
 syntax on
 " Setting colorscheme
-"color mycolor
+colorscheme industry " 配色主题的名称设置为solarized
+set   background=dark " 配色主题的色系设置为dark
 " Other settings.
 set   autoindent 	" 创建新行自动缩进
 set   autoread 		" 文件在Vim之外修改过，自动重新读入
 set   autowrite
-set   background=dark " 背景设置为黑色
 set   backspace=indent,eol,start
 set   nobackup
 set   cindent 		" 开启针对c文件的缩进
@@ -112,8 +112,38 @@ func SetTitle()
         endif
 endfunc
 " --------------------------------------------------------------------
-" SHORTCUT SETTINGS: {{{1
+" SYSTEM SHORTCUT SETTINGS: {{{1
 " --------------------------------------------------------------------
+" Set mapleader
+let mapleader=","
 " Space to command mode.
 nnoremap <space> :
 vnoremap <space> :
+" Switching between buffers.
+nnoremap <C-h> <C-W>h
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+" --------------------------------------------------------------------
+" PLUGINS SETTINGS: {{{1
+" --------------------------------------------------------------------
+" Man.vim Man手册插件 这个插件是vim自带的
+source $VIMRUNTIME/ftplugin/man.vim
+" -------------------------------------------------------------------u-
+" PLUGIN SHORTCUT SETTINGS: {{{1
+" --------------------------------------------------------------------
+" ------------------
+" <Fx>类型快捷键
+" ------------------
+" ------------------
+" <leader>类型快捷键
+" ------------------
+"关于标签页
+",c 创建新标签
+",x 删除标签
+",[ 移动到前一个标签
+",] 移动到下一个标签
+nmap <leader>c :tabnew<cr>
+nmap <leader>x :tabclose<cr>
+nmap <leader>] :tabn<cr>
+nmap <leader>[ :tabp<cr>
