@@ -12,7 +12,7 @@ filetype plugin indent on " 开启三个功能：文件类型检查、插件、�
 " Syntax highlighting.
 syntax on
 " Setting colorscheme
-colorscheme industry " 配色主题的名称设置为solarized
+" colorscheme industry " 配色主题的名称设置为industry
 set   background=dark " 配色主题的色系设置为dark
 " Other settings.
 set   autoindent 	" 创建新行自动缩进
