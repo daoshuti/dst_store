@@ -3,8 +3,9 @@
 " Email: daoshuti@163.com
 " Github: https://github.com/daoshuti
 " --------------------------------------------------------------------
-" GENERAL SETTINGS: {{{1
-" ---------------------------------------------------------------------
+" GENERAL SETTINGS:
+" --------------------------------------------------------------------
+"  {{{1
 " To use VIM settings, out of VI compatible mode.
 set nocompatible
 " Enable file type detection.
@@ -12,7 +13,7 @@ filetype plugin indent on " 开启三个功能：文件类型检查、插件、�
 " Syntax highlighting.
 syntax on
 " Setting colorscheme
-colorscheme industry " 配色主题的名称设置为solarized
+" colorscheme industry " 配色主题的名称设置为industry
 set   background=dark " 配色主题的色系设置为dark
 " Other settings.
 set   autoindent 	" 创建新行自动缩进
@@ -61,9 +62,11 @@ set   wildignore=*.bak,*.o,*.e,*~
 set   wildmenu
 set   wildmode=list:longest,full
 set   nowrap 		" 禁止文字自动换行
+" }}}1
 " --------------------------------------------------------------------
-" AUTO COMMANDS: {{{1
+" AUTO COMMANDS:
 " --------------------------------------------------------------------
+"  {{{1
 autocmd BufNewFile *.c,*.cpp,*.sh,*.py,*.java exec ":call SetTitle()"                                                                                       
 "新建.py
 "定义函数SetTitle，自动插入文件头
@@ -111,9 +114,11 @@ func SetTitle()
                 call setline(8,"")  
         endif
 endfunc
+" }}}1
 " --------------------------------------------------------------------
-" SYSTEM SHORTCUT SETTINGS: {{{1
+" SYSTEM SHORTCUT SETTINGS:
 " --------------------------------------------------------------------
+"  {{{1
 " Set mapleader
 let mapleader=","
 " Space to command mode.
@@ -124,15 +129,16 @@ nnoremap <C-h> <C-W>h
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
+" }}}1
 " --------------------------------------------------------------------
-" PLUGINS SETTINGS: {{{1
+" PLUGINS SETTINGS:
 " --------------------------------------------------------------------
+" {{{1
 " 启动pathogen插件管理器
 execute pathogen#infect() 
 " 管理vim配色
 "set   background=dark " 配色主题的色系设置为dark
-"colorscheme solarized " 配色主题的名称设置为solarized
-"colorscheme molokai " 配色主题的名称设置为solarized
+colorscheme solarized " 配色主题的名称设置为solarized
 " 配置Taglist插件
 let g:Tlist_Auto_Update=1
 let g:Tlist_Process_File_Always=1
@@ -162,9 +168,11 @@ if has("cscope")
 endif
 " Man.vim Man手册插件 这个插件是vim自带的
 source $VIMRUNTIME/ftplugin/man.vim
-" -------------------------------------------------------------------u-
-" PLUGIN SHORTCUT SETTINGS: {{{1
+" }}}1
 " --------------------------------------------------------------------
+" PLUGIN SHORTCUT SETTINGS:
+" --------------------------------------------------------------------
+"  {{{1
 " 快捷键依赖的运行shell脚本的函数
 function! RunShell(Msg, Shell)
 	echo a:Msg . '...'
@@ -177,7 +185,6 @@ endfunction
 nmap  <F2> :TlistToggle<cr>
 nmap  <F3> :NERDTreeToggle<cr>
 nmap  <F4> :MRU<cr>
-nmap  <F5> :CtrlP<cr>
 nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
 nmap <F10> :call RunShell("本地生成cscope文件", "bash ~/.vim/shell/create_cscope.sh")<cr>
 nmap <F12> :call RunShell("Generate cscope", "cscope -Rb")<cr>:cs add cscope.out<cr>
@@ -223,3 +230,4 @@ nmap <leader>c :tabnew<cr>
 nmap <leader>x :tabclose<cr>
 nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
+" }}}1
