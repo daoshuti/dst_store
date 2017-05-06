@@ -139,6 +139,7 @@ execute pathogen#infect()
 " 管理vim配色
 "set   background=dark " 配色主题的色系设置为dark
 colorscheme solarized " 配色主题的名称设置为solarized
+let g:solarized_termcolors=256
 " 配置Taglist插件
 let g:Tlist_Auto_Update=1
 let g:Tlist_Process_File_Always=1
