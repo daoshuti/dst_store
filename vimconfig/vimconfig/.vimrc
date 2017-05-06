@@ -261,7 +261,9 @@ nmap <leader>x :tabclose<cr>
 nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
 
+" 不使用swapfile文件（不能灾难恢复）
 set noswapfile
+" 添加tags文件(以便使用代码跳转和补全)
 set tags+=/usr/include/tags
 set tags+=./tags
 
