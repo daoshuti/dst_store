@@ -197,6 +197,12 @@ let g:OmniCpp_SelectFirstItem=2
 " Man.vim Man手册插件 这个插件是vim自带的
 source $VIMRUNTIME/ftplugin/man.vim
 
+" snipmate插件 代码补全（从vim官网下载，不是github）
+" 补全c\cpp\java\ruby等问题
+
+" acp插件 代码提示
+" 智能显示代码提示
+
 " }}}1
 " PLUGIN SHORTCUT SETTINGS:
 " {{{1
@@ -211,6 +217,12 @@ endfunction
 " ------------------
 " <Fx>类型快捷键
 " ------------------
+" <F2> 左侧，Tlist 窗口
+" <F3> 右侧，文件浏览窗口
+" <F4> 下方，查看最近的浏览记录
+" <F9> 生成tags数据库文件。之后就可以使用ctrl+] 和 ctrl+o(或者ctrl+t)
+" <F10> 以绝对路径在当前目录下，生成cscope数据库文件<目录名.out>
+" <F12> 生成cscope.out数据库文件
 nmap  <F2> :TlistToggle<cr>
 nmap  <F3> :NERDTreeToggle<cr>
 nmap  <F4> :MRU<cr>
