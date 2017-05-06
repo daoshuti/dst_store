@@ -65,7 +65,6 @@ set   nowrap 		" 禁止文字自动换行
 " AUTO COMMANDS: {{{1
 " --------------------------------------------------------------------
 autocmd BufNewFile *.c,*.cpp,*.sh,*.py,*.java exec ":call SetTitle()"                                                                                       
-"新建.py
 "定义函数SetTitle，自动插入文件头
 func SetTitle()
 		"如果文件类型为.c或者.cpp文件
