@@ -35,6 +35,7 @@ set   fileencodings=utf-8,gb2312,gbk,gb18030
 set   fileformat=unix
 set   foldenable
 set   foldmethod=marker
+"set   foldcolumn=5
 set   guioptions-=T
 set   guioptions-=m
 set   guioptions-=r
@@ -210,7 +211,6 @@ nmap  <F2> :TlistToggle<cr>
 nmap  <F3> :NERDTreeToggle<cr>
 nmap  <F4> :MRU<cr>
 "nmap  <F5> <Plug>LookupFile<cr>
-nmap  <F5> :CtrlP<cr>
 "nmap  <F6> :vimgrep /<C-R>=expand("<cword>")<cr>/ **/*.c **/*.h<cr><C-o>:cw<cr>
 nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
 "nmap <F10> :call HLUDSync()<cr>
