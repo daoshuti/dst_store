@@ -146,13 +146,16 @@ colorscheme solarized " 配色主题的名称设置为solarized
 let g:solarized_termcolors=256
 
 " 配置Taglist插件
-let g:Tlist_Auto_Update=1
-let g:Tlist_Process_File_Always=1
-let g:Tlist_Exit_OnlyWindow=1
-let g:Tlist_Show_One_File=1
-let g:Tlist_WinWidth=25
-let g:Tlist_Enable_Fold_Column=0
-let g:Tlist_Auto_Highlight_Tag=1
+let g:Tlist_Auto_Open=1				" 默认打开Taglist窗口
+let g:Tlist_Auto_Update=1			" 打开/禁止Taglist在打开新文件或修改文件后自动更新标签。禁止自动更新后，Taglist仅在使用:TlistUpdate,:TlistAddFiles，或:TlistAddFilesRecursive命令后更新标签
+let g:Tlist_Process_File_Always=1	" Taglist始终解析文件中的tag，不管Taglist窗口有没有打开
+let g:Tlist_Exit_OnlyWindow=1		" 只有剩一个窗口且是Taglist时，自动退出
+let g:Tlist_Show_One_File=1			" Taglist只显示一个文件
+"let g:Tlist_File_Fold_Auto_Close=1	" 当设置为１，当同时显示多个文件中的tag时，可使taglist只显示当前文件tag，其它文件的tag都被折叠起来
+"let g:Tlist_Highlight_Tag_On_BufEnter=1     " 默认情况下，Vim打开/切换至一个新的缓冲区/文件后，标签列表窗口会自动将当前代码窗口对应的标签高亮显示。TlistHighlight_Tag_On_BufEnter置为0可禁止以上行为
+let g:Tlist_WinWidth=25				" 设置Taglist的宽度为25
+let g:Tlist_Enable_Fold_Column=0	" 不要显示折叠树
+let g:Tlist_Auto_Highlight_Tag=1	" 自动高亮Taglist窗口中选中的Tag
 
 " 配置NERDTree插件
 let Tlist_Show_One_File=1
