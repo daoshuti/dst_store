@@ -10,6 +10,10 @@
 " To use VIM settings, out of VI compatible mode.
 set nocompatible
 
+" Pathogen
+" 启动pathogen插件管理器
+execute pathogen#infect() 
+
 " Enable file type detection.
 filetype plugin indent on " 开启三个功能：文件类型检查、插件、缩进
 
@@ -17,63 +21,54 @@ filetype plugin indent on " 开启三个功能：文件类型检查、插件、�
 syntax on
 
 " Setting colorscheme
-colorscheme industry " 配色主题的名称设置为industry
+"colorscheme industry " 配色主题的名称设置为industry
 set   background=dark " 配色主题的色系设置为dark
 
 " Other settings.
-set   autoindent 	" 创建新行自动缩进
-set   autoread 		" 文件在Vim之外修改过，自动重新读入
-set   autowrite
-set   backspace=indent,eol,start
-set   nobackup
-set   cindent 		" 开启针对c文件的缩进
-set   cinoptions=:0
-set   cursorline 	" 为光标所在行加下划线
-set   completeopt=longest,menuone
-set   noexpandtab
-set   fileencodings=utf-8,gb2312,gbk,gb18030 " 使用utf-8或gbk等编码打开文件
-set   fileformat=unix
-set   foldenable
-set   foldmethod=marker " 代码折叠
-set   guioptions-=T
-set   guioptions-=m
-set   guioptions-=r
-set   guioptions-=l
-set   helpheight=10
-set   helplang=cn 	" 帮助系统设置为中文
-set   hidden
-set   history=100 	" 历史记录保留100条
-set   hlsearch
-set   ignorecase 	" 检索时忽略大小写
-set   incsearch
-set   laststatus=2 	" 指定何时显示状态行
-"                            " 0 永远没有
-"                            " 1 只有分割窗口时(默认值)
-"                            " 2 总是存在
-set   mouse=a 		" 可以使用鼠标
-set   number 		" 显示行号
-set   pumheight=10
-set   ruler
-set   scrolloff=5
-set   shiftwidth=4
-set   showcmd
-set   smartindent	" 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
-set   smartcase
-set   tabstop=4 	" 制表符为4
-set   termencoding=utf-8
-set   textwidth=80
-set   whichwrap=h,l
-set   wildignore=*.bak,*.o,*.e,*~
-set   wildmenu
-set   wildmode=list:longest,full
-set   nowrap 		" 禁止文字自动换行
-
-" }}}1
-" Pathogen
-" {{{1
-
-" 启动pathogen插件管理器
-execute pathogen#infect() 
+set autoindent		" 创建新行自动缩进
+set autoread		" 文件在Vim之外修改过，自动重新读入
+set autowrite
+set backspace=indent,eol,start
+set nobackup
+set cindent			" 开启针对c文件的缩进
+set cinoptions=:0
+set cursorline		" 为光标所在行加下划线
+set completeopt=longest,menuone
+set noexpandtab
+set fileencodings=utf-8,gb2312,gbk,gb18030 " 使用utf-8或gbk等编码打开文件
+set fileformat=unix
+set foldenable
+set foldmethod=marker	" 代码折叠
+set guioptions-=T
+set guioptions-=m
+set guioptions-=r
+set guioptions-=l
+set helpheight=10
+set helplang=cn		" 帮助系统设置为中文
+set hidden
+set history=100		" 历史记录保留100条
+set hlsearch
+set ignorecase		" 检索时忽略大小写
+set incsearch
+set laststatus=2	" 指定何时显示状态行  0.永远没有  1.只有分割窗口时(默认值)  2.总是存在
+set mouse=a			" 可以使用鼠标
+set number			" 显示行号
+set pumheight=10
+set ruler
+set scrolloff=5
+set shiftwidth=4
+set showcmd
+set smartindent		" 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
+set smartcase
+set tabstop=4		" 制表符为4
+set termencoding=utf-8
+set textwidth=80
+set whichwrap=h,l
+set wildignore=*.bak,*.o,*.e,*~
+set wildmenu
+set wildmode=list:longest,full
+set nowrap			" 禁止文字自动换行
+set noswapfile		" 不使用swapfile文件（不能灾难恢复）
 
 " }}}1
 " AUTO COMMANDS:
@@ -147,7 +142,7 @@ nnoremap <C-l> <C-W>l
 
 " 管理vim配色
 "set   background=dark " 配色主题的色系设置为dark
-"colorscheme solarized " 配色主题的名称设置为solarized
+colorscheme solarized " 配色主题的名称设置为solarized
 let g:solarized_termcolors=256
 
 " 配置Taglist插件
@@ -274,8 +269,6 @@ nmap <leader>x :tabclose<cr>
 nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
 
-" 不使用swapfile文件（不能灾难恢复）
-set noswapfile
 " 添加tags文件(以便使用代码跳转和补全)
 set tags+=/usr/include/tags
 set tags+=./tags
