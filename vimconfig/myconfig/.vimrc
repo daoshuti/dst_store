@@ -198,6 +198,10 @@ source $VIMRUNTIME/ftplugin/man.vim
 " acp插件 代码提示
 " 智能显示代码提示
 
+" 设定中文doc帮助文档目录
+"let helptags="$VIM/bundle/vimcdoc/doc"
+"set helplang=cn "设定帮助系统设置为中文
+
 " }}}1
 " PLUGIN SHORTCUT SETTINGS:
 " {{{1
