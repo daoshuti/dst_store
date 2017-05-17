@@ -38,7 +38,10 @@ set noexpandtab
 set fileencodings=utf-8,gb2312,gbk,gb18030 " 使用utf-8或gbk等编码打开文件
 set fileformat=unix
 set foldenable
-set foldmethod=marker	" 代码折叠
+set foldmethod=marker	" 代码折叠(标签折叠方式)
+"set foldmethod=indent	" 代码折叠（缩进折叠方式）
+"set foldmethod=syntax	" 代码折叠（语法折叠方式）
+set foldcolumn=0		" 每行前面有0个折叠标识列
 set guioptions-=T
 set guioptions-=m
 set guioptions-=r
@@ -141,8 +144,8 @@ nnoremap <C-l> <C-W>l
 " {{{1
 
 " 管理vim配色
-"set   background=dark " 配色主题的色系设置为dark
-colorscheme solarized " 配色主题的名称设置为solarized
+"set   background=light " 配色主题的色系设置为light
+"colorscheme solarized " 配色主题的名称设置为solarized
 let g:solarized_termcolors=256
 
 " 配置Taglist插件
@@ -209,11 +212,48 @@ source $VIMRUNTIME/ftplugin/man.vim
 " PLUGIN SHORTCUT SETTINGS:
 " {{{1
 
-" 快捷键依赖的运行shell脚本的函数
+" <F9><F10><F12>快捷键依赖的运行shell脚本的函数
 function! RunShell(Msg, Shell)
 	echo a:Msg . '...'
 	call system(a:Shell)
 	echon 'done'
+endfunction
+
+let s:f6_flag=0
+let s:f7_flag=0
+" <F6>快捷键依赖的运行vimscript脚本的函数
+function F6_shell()
+	if (s:f6_flag == 0)
+		set paste
+		set nonumber
+		if (s:f7_flag == 1)
+			set foldcolumn=0
+			set foldmethod=marker
+		endif
+		let s:f6_flag=1
+	else
+		set nopaste
+		set number
+		if (s:f7_flag == 1)
+			set foldcolumn=5
+			set foldmethod=indent
+		endif
+		let s:f6_flag=0
+	endif
+endfunction
+
+
+" <F7>快捷键依赖的运行vimscript脚本的函数
+function F7_shell()
+	if (s:f7_flag == 0)
+		set foldcolumn=5
+		set foldmethod=indent
+		let s:f7_flag=1
+	else
+		set foldcolumn=0
+		set foldmethod=marker
+		let s:f7_flag=0
+	endif
 endfunction
 
 " ------------------
@@ -222,12 +262,17 @@ endfunction
 " <F2> 左侧，Tlist 窗口
 " <F3> 右侧，文件浏览窗口
 " <F4> 下方，查看最近的浏览记录
+" <F5> CtrlP模式下刷新缓存（CtrlP插件自带）
+" <F6> 粘贴模式
+" <F7> 切换代码折叠方式（maker改为indent）
 " <F9> 生成tags数据库文件。之后就可以使用ctrl+] 和 ctrl+o(或者ctrl+t)
 " <F10> 以绝对路径在当前目录下，生成cscope数据库文件<目录名.out>
 " <F12> 生成cscope.out数据库文件
 nmap  <F2> :TlistToggle<cr>
 nmap  <F3> :NERDTreeToggle<cr>
 nmap  <F4> :MRU<cr>
+nmap  <F6> :call F6_shell()<cr>
+nmap  <F7> :call F7_shell()<cr>
 nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
 nmap <F10> :call RunShell("本地生成cscope文件", "bash ~/.vim/shell/create_cscope.sh")<cr>
 nmap <F12> :call RunShell("Generate cscope", "cscope -Rb")<cr>:cs add cscope.out<cr>
@@ -277,8 +322,8 @@ nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
 
 " 添加tags文件(以便使用代码跳转和补全)
-set tags+=/usr/include/tags
-set tags+=./tags
+"set tags+=/usr/include/tags
+"set tags+=./tags
 
 " }}}1
 
