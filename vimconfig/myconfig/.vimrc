@@ -148,6 +148,13 @@ nnoremap <C-l> <C-W>l
 "colorscheme solarized " 配色主题的名称设置为solarized
 let g:solarized_termcolors=256
 
+" Markdown插件
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+"let g:markdown_syntax_conceal = 0 "关闭Markdown语法高亮
+"let g:markdown_minlines = 100 "支持100行显示（默认50行），开启后可能会卡
+
+
 " 配置Taglist插件
 let g:Tlist_Auto_Open=1				" 默认打开Taglist窗口
 let g:Tlist_Auto_Update=1			" 打开/禁止Taglist在打开新文件或修改文件后自动更新标签。禁止自动更新后，Taglist仅在使用:TlistUpdate,:TlistAddFiles，或:TlistAddFilesRecursive命令后更新标签
