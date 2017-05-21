@@ -80,48 +80,48 @@ set noswapfile		" 不使用swapfile文件（不能灾难恢复）
 autocmd BufNewFile *.c,*.cpp,*.sh,*.py,*.java exec ":call SetTitle()"                                                                                       
 "定义函数SetTitle，自动插入文件头
 func SetTitle()
-		"如果文件类型为.c或者.cpp文件
-        if (&filetype == 'c' || &filetype == 'cpp')
-                call setline(1, "/*************************************************************************")  
-                call setline(2, "\ @Author: wanghan")  
-                call setline(3, "\ @Created Time : ".strftime("%c"))  
-                call setline(4, "\ @File Name: ".expand("%"))  
-                call setline(5, "\ @Description:")  
-                call setline(6, " ************************************************************************/")  
-                call setline(7,"")  
-        endif
-		"如果文件类型为.sh文件
-        if &filetype == 'sh'  
-                call setline(1, "\#!/bin/bash")
-                call setline(2, "\# Author: wanghan")
-                call setline(3, "\# Created Time : ".strftime("%c"))
-                call setline(4, "\# File Name: ".expand("%"))
-                call setline(5, "\# Description:")
-                call setline(6,"")
-        endif
-        "如果文件类型为.py文件
-        if &filetype == 'python'
-                call setline(1, "\#!/usr/bin/env python")
-                call setline(2, "\# -*- coding=utf8 -*-")
-                call setline(3, "\"\"\"")
-                call setline(4, "\# Author: wanghan")
-                call setline(5, "\# Created Time : ".strftime("%c"))
-                call setline(6, "\# File Name: ".expand("%"))
-                call setline(7, "\# Description:")
-                call setline(8, "\"\"\"")
-                call setline(9,"")
-        endif
-		"如果文件类型为.java文件
-        if &filetype == 'java'  
-                call setline(1, "//coding=utf8")  
-                call setline(2, "/**")  
-                call setline(3, "\ *\ @Author: wanghan")  
-                call setline(4, "\ *\ @Created Time : ".strftime("%c"))  
-                call setline(5, "\ *\ @File Name: ".expand("%"))  
-                call setline(6, "\ *\ @Description:")  
-                call setline(7, "\ */")  
-                call setline(8,"")  
-        endif
+	"如果文件类型为.c或者.cpp文件
+	if (&filetype == 'c' || &filetype == 'cpp')
+		call setline(1, "/*************************************************************************")  
+		call setline(2, "\ @Author: wanghan")  
+		call setline(3, "\ @Created Time : ".strftime("%c"))  
+		call setline(4, "\ @File Name: ".expand("%"))  
+		call setline(5, "\ @Description:")  
+		call setline(6, " ************************************************************************/")  
+		call setline(7,"")  
+	endif
+	"如果文件类型为.sh文件
+	if &filetype == 'sh'  
+		call setline(1, "\#!/bin/bash")
+		call setline(2, "\# Author: wanghan")
+		call setline(3, "\# Created Time : ".strftime("%c"))
+		call setline(4, "\# File Name: ".expand("%"))
+		call setline(5, "\# Description:")
+		call setline(6,"")
+	endif
+	"如果文件类型为.py文件
+	if &filetype == 'python'
+		call setline(1, "\#!/usr/bin/env python")
+		call setline(2, "\# -*- coding=utf8 -*-")
+		call setline(3, "\"\"\"")
+		call setline(4, "\# Author: wanghan")
+		call setline(5, "\# Created Time : ".strftime("%c"))
+		call setline(6, "\# File Name: ".expand("%"))
+		call setline(7, "\# Description:")
+		call setline(8, "\"\"\"")
+		call setline(9,"")
+	endif
+	"如果文件类型为.java文件
+	if &filetype == 'java'  
+		call setline(1, "//coding=utf8")  
+		call setline(2, "/**")  
+		call setline(3, "\ *\ @Author: wanghan")  
+		call setline(4, "\ *\ @Created Time : ".strftime("%c"))  
+		call setline(5, "\ *\ @File Name: ".expand("%"))  
+		call setline(6, "\ *\ @Description:")  
+		call setline(7, "\ */")  
+		call setline(8,"")  
+	endif
 endfunc
 " 自动将光标定位到末尾
 autocmd BufNewFile * normal G
@@ -154,6 +154,30 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 "let g:markdown_syntax_conceal = 0 "关闭Markdown语法高亮
 "let g:markdown_minlines = 100 "支持100行显示（默认50行），开启后可能会卡
 
+" 配置rainbow插件
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+			\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+			\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+			\	'operators': '_,_',
+			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+			\	'separately': {
+			\		'*': {},
+			\		'tex': {
+			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+			\		},
+			\		'lisp': {
+			\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+			\		},
+			\		'vim': {
+			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+			\		},
+			\		'html': {
+			\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+			\		},
+			\		'css': 0,
+			\	}
+			\}
 
 " 配置Taglist插件
 let g:Tlist_Auto_Open=1				" 默认打开Taglist窗口
@@ -180,13 +204,13 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " 配置cscope
 if has("cscope")
-    set csto=1
-    set cst
-    set nocsverb
-    if filereadable("cscope.out")
-        cs add cscope.out
-    endif
-    set csverb
+	set csto=1
+	set cst
+	set nocsverb
+	if filereadable("cscope.out")
+		cs add cscope.out
+	endif
+	set csverb
 endif
 
 " 配置OmniCppComplete插件
