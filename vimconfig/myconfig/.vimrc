@@ -155,6 +155,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 "let g:markdown_minlines = 100 "支持100行显示（默认50行），开启后可能会卡
 
 " 配置rainbow插件
+" 显示彩色的括号
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 let g:rainbow_conf = {
 			\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
@@ -234,6 +235,9 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 " acp插件 代码提示
 " 智能显示代码提示
+
+" auto-pairs插件
+" 括号自动补全()[]{}
 
 " 设定中文doc帮助文档目录
 "let helptags="$VIM/bundle/vimcdoc/doc"
