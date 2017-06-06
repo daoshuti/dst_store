@@ -1,0 +1,35 @@
+
+#include "msm8917.dtsi"
+#include "msm8917-pmi8937-mtp.dtsi"
+#include "msm8937-regulator.dtsi"
+
+&i2c_3 {
+	status = "ok";
+	clock-frequency = <400000>;
+
+	focaltech@38{
+		compatible = "focaltech,fts";
+		reg = <0x38>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <65 0x2>;
+		vdd-supply = <&pm8937_l10>;
+		vcc_i2c-supply = <&pm8937_l6>;
+		/* pins used by touchscreen */
+		pinctrl-names = "pmx_ts_active","pmx_ts_suspend","pmx_ts_release";
+		pinctrl-0 = <&ts_int_active &ts_reset_active>;
+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		pinctrl-2 = <&ts_release>;
+		focaltech,name = "fts_ts";
+		focaltech,reset-gpio = <&tlmm 64 0x00>;
+		//focaltech,power_ldo-gpio = <&tlmm 47 0x00>;
+		focaltech,irq-gpio = <&tlmm 65 0x02>;
+		focaltech,display-coords = <0 0 720 1280>;
+		focaltech,max-touch-number = <10>;
+		focaltech,have-key;
+		focaltech,key-number = <3>;
+		focaltech,keys = <139 172 158>;
+		focaltech,key-y-coord = <1350>;
+		focaltech,key-x-coords = <180 350 540>;
+	};
+
+};
