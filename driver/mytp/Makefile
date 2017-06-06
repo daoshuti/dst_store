@@ -14,4 +14,6 @@ modules:
 	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KERNELDIR) M=$(PWD) modules
 	perl /home/wanghan/source/kernel/scripts/sign-file sha512 $(PWD)/signing_key.priv $(PWD)/signing_key.x509 mytp.ko
 clean:
-	rm *.o *.mod.c *.order *.symvers *.ko
+	rm -rf *.o *.mod.c *.order *.symvers \
+		.*.ko.cmd .*.mod.o.cmd .*.o.cmd .tmp_versions \
+		*.ko
