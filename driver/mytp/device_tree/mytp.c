@@ -11,7 +11,7 @@
 #include <linux/module.h>
 #include <linux/i2c.h>
 #include <linux/device.h>
-#include <linux/of.h>
+#include <linux/of_gpio.h>
 #endif
 #if 0
 #include <linux/i2c.h>
@@ -75,29 +75,6 @@ struct mytp_platform_data
     u32 max_touch_number;
 };
 
-#if 0
-struct ts_event
-{
-    u16 au16_x[MYTP_MAX_POINTS]; /*x coordinate */
-    u16 au16_y[MYTP_MAX_POINTS]; /*y coordinate */
-    u16 pressure[MYTP_MAX_POINTS];
-    u8 au8_touch_event[MYTP_MAX_POINTS]; /* touch event: 0 -- down; 1-- up; 2 -- contact */
-    u8 au8_finger_id[MYTP_MAX_POINTS];   /*touch ID */
-    u8 area[MYTP_MAX_POINTS];
-    u8 touch_point;
-    u8 point_num;
-};
-#endif
-
-struct mytp_data 
-{
-    struct i2c_client *client;
-#if 0
-    struct input_dev *input_dev;
-    struct ts_event event;
-#endif
-    const struct mytp_platform_data *pdata;
-};
 
 /****************************************************************************
  * global variable {{{1
@@ -183,7 +160,6 @@ static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
 static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {
 	struct mytp_platform_data *pdata;
-//	struct mytp_data *data;
 	int err;
 
 	PRINT_INFO("mytp prebo start!");
