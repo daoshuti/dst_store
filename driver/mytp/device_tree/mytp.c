@@ -6,45 +6,11 @@
  ****************************************************************************
  * Header {{{1 
  ****************************************************************************/
-#if 1
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/i2c.h>
 #include <linux/device.h>
 #include <linux/of_gpio.h>
-#endif
-#if 0
-#include <linux/i2c.h>
-#include <linux/input.h>
-#include <linux/input/mt.h>
-#include <linux/slab.h>
-#include <linux/interrupt.h>
-#include <linux/delay.h>
-#include <linux/kernel.h>
-#include <linux/module.h>
-#include <linux/gpio.h>
-#include <linux/of_gpio.h>
-#include <linux/regulator/consumer.h>
-#include <linux/firmware.h>
-#include <linux/debugfs.h>
-#include <linux/mutex.h>
-#include <linux/wait.h>
-#include <linux/time.h>
-#include <linux/workqueue.h>
-#include <linux/fs.h>
-#include <linux/proc_fs.h>
-#include <asm/uaccess.h>
-#include <linux/version.h>
-#include <linux/types.h>
-#include <linux/sched.h>
-#include <linux/kthread.h>
-#include <linux/init.h>
-#include <linux/cdev.h>
-#include <linux/device.h>
-#include <linux/mount.h>
-#include <linux/netdevice.h>
-#include <linux/unistd.h>
-#endif
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
@@ -74,11 +40,6 @@ struct mytp_platform_data
     u32 y_min;
     u32 max_touch_number;
 };
-
-
-/****************************************************************************
- * global variable {{{1
- ****************************************************************************/
 
 /****************************************************************************
  * function {{{1
