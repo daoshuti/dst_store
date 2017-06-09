@@ -9,7 +9,6 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/i2c.h>
-#include <linux/device.h>
 #include <linux/of_gpio.h>
 /****************************************************************************
  * Define {{{1 
