@@ -9,8 +9,9 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/i2c.h>
-#include <linux/device.h>
+#include <linux/of_gpio.h>
 #include <linux/input.h>
+#include <linux/input/mt.h>
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
@@ -19,19 +20,156 @@
 #define MYTP_DRIVER_NAME 	"mytp_ft5435"
 
 #define MYTP_MT_PROTOCOL_B_EN 	1
+#define MYTP_MAX_POINTS 		10
+#define MYTP_COORDS_ARR_SIZE	4
 
 /****************************************************************************
  * struct {{{1
  ****************************************************************************/
+struct mytp_platform_data 
+{
+	u32 irq_gpio;
+	u32 irq_gpio_flags;
+	u32 reset_gpio;
+	u32 reset_gpio_flags;
+	bool have_key;
+	u32 key_number;
+	u32 keys[4];
+	u32 key_y_coord;
+	u32 key_x_coords[4];
+	u32 x_max;
+	u32 y_max;
+	u32 x_min;
+	u32 y_min;
+	u32 max_touch_number;
+};
+
 struct mytp_data 
 {
 	struct i2c_client *client;
 	struct input_dev *input_dev;
+	struct mytp_platform_data *pdata;
 };
 
 /****************************************************************************
  * function {{{1
  ****************************************************************************/
+
+static int mytp_get_dt_coords(struct device *dev, char *name,
+		struct mytp_platform_data *pdata)
+{
+	u32 coords[MYTP_COORDS_ARR_SIZE];
+	struct property *prop;
+	struct device_node *np = dev->of_node;
+	int coords_size, rc;
+
+	prop = of_find_property(np, name, NULL);
+	if (!prop)
+		return -EINVAL;
+	if (!prop->value)
+		return -ENODATA;
+
+
+	coords_size = prop->length / sizeof(u32);
+	if (coords_size != MYTP_COORDS_ARR_SIZE)
+	{
+		PRINT_INFO("invalid %s", name);
+		return -EINVAL;
+	}
+
+	rc = of_property_read_u32_array(np, name, coords, coords_size);
+	if (rc && (rc != -EINVAL))
+	{
+		PRINT_INFO("Unable to read %s", name);
+		return rc;
+	}
+
+	if (!strcmp(name, "focaltech,display-coords"))
+	{
+		pdata->x_min = coords[0];
+		pdata->y_min = coords[1];
+		pdata->x_max = coords[2];
+		pdata->y_max = coords[3];
+	}
+	else
+	{
+		PRINT_INFO("unsupported property %s", name);
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
+{
+	int rc;
+	struct device_node *np = dev->of_node;
+	u32 temp_val;
+
+	rc = mytp_get_dt_coords(dev, "focaltech,display-coords", pdata);
+	if (rc)
+		PRINT_INFO("Unable to get display-coords");
+
+	/* key */
+	pdata->have_key = of_property_read_bool(np, "focaltech,have-key");
+	if (pdata->have_key)
+	{
+		rc = of_property_read_u32(np, "focaltech,key-number", &pdata->key_number);
+		if (rc)
+		{
+			PRINT_INFO("Key number undefined!");
+		}
+		rc = of_property_read_u32_array(np, "focaltech,keys",
+				pdata->keys, pdata->key_number);
+		if (rc)
+		{
+			PRINT_INFO("Keys undefined!");
+		}
+		rc = of_property_read_u32(np, "focaltech,key-y-coord", &pdata->key_y_coord);
+		if (rc)
+		{
+			PRINT_INFO("Key Y Coord undefined!");
+		}
+		rc = of_property_read_u32_array(np, "focaltech,key-x-coords",
+				pdata->key_x_coords, pdata->key_number);
+		if (rc)
+		{
+			PRINT_INFO("Key X Coords undefined!");
+		}
+		PRINT_INFO("%d: (%d, %d, %d), [%d, %d, %d][%d]",
+				pdata->key_number, pdata->keys[0], pdata->keys[1], pdata->keys[2],
+				pdata->key_x_coords[0], pdata->key_x_coords[1], pdata->key_x_coords[2],
+				pdata->key_y_coord);
+	}
+
+	/* reset, irq gpio info */
+	pdata->reset_gpio = of_get_named_gpio_flags(np, "focaltech,reset-gpio", 0, &pdata->reset_gpio_flags);
+	if (pdata->reset_gpio < 0)
+	{
+		PRINT_INFO("Unable to get reset_gpio");
+	}
+
+	pdata->irq_gpio = of_get_named_gpio_flags(np, "focaltech,irq-gpio", 0, &pdata->irq_gpio_flags);
+	if (pdata->irq_gpio < 0)
+	{
+		PRINT_INFO("Unable to get irq_gpio");
+	}
+
+	rc = of_property_read_u32(np, "focaltech,max-touch-number", &temp_val);
+	if (!rc)
+	{
+		pdata->max_touch_number = temp_val;
+		PRINT_INFO("max_touch_number=%d", pdata->max_touch_number);
+	}
+	else
+	{
+		PRINT_INFO("Unable to get max-touch-number");
+		pdata->max_touch_number = MYTP_MAX_POINTS;
+	}
+
+	return 0;
+}
+
 static int mytp_input_dev_init( struct i2c_client *client, struct mytp_data *data,  struct input_dev *input_dev, struct mytp_platform_data *pdata)
 {
 	int  err, len;
@@ -47,7 +185,7 @@ static int mytp_input_dev_init( struct i2c_client *client, struct mytp_data *dat
 	__set_bit(EV_KEY, input_dev->evbit);
 	if (data->pdata->have_key)
 	{
-		FTS_DEBUG("set key capabilities");
+		PRINT_INFO("set key capabilities");
 		for (len = 0; len < data->pdata->key_number; len++)
 		{
 			input_set_capability(input_dev, EV_KEY, data->pdata->keys[len]);
@@ -86,11 +224,40 @@ free_inputdev:
 
 static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {
+	struct mytp_platform_data *pdata;
 	struct mytp_data *data;
 	struct input_dev *input_dev;
 	int err;
 
 	PRINT_INFO("mytp prebo start!");
+
+	/* 1. Get Platform data */
+	if (client->dev.of_node)
+	{
+		pdata = devm_kzalloc(&client->dev,
+				sizeof(struct mytp_platform_data),
+				GFP_KERNEL);
+		if (!pdata)
+		{
+			PRINT_INFO("[MEMORY]Failed to allocate memory");
+			return -ENOMEM;
+		}
+		err = mytp_parse_dt(&client->dev, pdata);
+		if (err)
+		{
+			PRINT_INFO("[DTS]DT parsing failed");
+		}
+	}
+	else
+	{
+		return -1;
+	}
+
+	if (!pdata)
+	{
+		PRINT_INFO("Invalid pdata");
+		return -EINVAL;
+	}
 
 	data = devm_kzalloc(&client->dev, sizeof(struct mytp_data), GFP_KERNEL);
 	if (!data)
