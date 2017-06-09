@@ -18,6 +18,8 @@
 
 #define MYTP_DRIVER_NAME 	"mytp_ft5435"
 
+#define MYTP_MT_PROTOCOL_B_EN 	1
+
 /****************************************************************************
  * struct {{{1
  ****************************************************************************/
@@ -32,53 +34,50 @@ struct mytp_data
  ****************************************************************************/
 static int mytp_input_dev_init( struct i2c_client *client, struct mytp_data *data,  struct input_dev *input_dev, struct mytp_platform_data *pdata)
 {
-    int  err, len;
+	int  err, len;
 
-    /* Init and register Input device */
-    input_dev->name = MYTP_DRIVER_NAME;
-    input_dev->id.bustype = BUS_I2C;
-    input_dev->dev.parent = &client->dev;
+	/* Init and register Input device */
+	input_dev->name = MYTP_DRIVER_NAME;
+	input_dev->id.bustype = BUS_I2C;
+	input_dev->dev.parent = &client->dev;
 
-    input_set_drvdata(input_dev, data);
-    i2c_set_clientdata(client, data);
+	input_set_drvdata(input_dev, data);
+	i2c_set_clientdata(client, data);
 
-    __set_bit(EV_KEY, input_dev->evbit);
-    if (data->pdata->have_key)
-    {
-        FTS_DEBUG("set key capabilities");
-        for (len = 0; len < data->pdata->key_number; len++)
-        {
-            input_set_capability(input_dev, EV_KEY, data->pdata->keys[len]);
-        }
-    }
-    __set_bit(EV_ABS, input_dev->evbit);
-    __set_bit(BTN_TOUCH, input_dev->keybit);
-    __set_bit(INPUT_PROP_DIRECT, input_dev->propbit);
+	__set_bit(EV_KEY, input_dev->evbit);
+	if (data->pdata->have_key)
+	{
+		FTS_DEBUG("set key capabilities");
+		for (len = 0; len < data->pdata->key_number; len++)
+		{
+			input_set_capability(input_dev, EV_KEY, data->pdata->keys[len]);
+		}
+	}
+	__set_bit(EV_ABS, input_dev->evbit);
+	__set_bit(BTN_TOUCH, input_dev->keybit);
+	__set_bit(INPUT_PROP_DIRECT, input_dev->propbit);
 
-#if FTS_MT_PROTOCOL_B_EN
-    input_mt_init_slots(input_dev, pdata->max_touch_number, INPUT_MT_DIRECT);
+#if MYTP_MT_PROTOCOL_B_EN
+	input_mt_init_slots(input_dev, pdata->max_touch_number, INPUT_MT_DIRECT);
 #else
-    input_set_abs_params(input_dev, ABS_MT_TRACKING_ID, 0, 0x0f, 0, 0);
+	input_set_abs_params(input_dev, ABS_MT_TRACKING_ID, 0, 0x0f, 0, 0);
 #endif
-    input_set_abs_params(input_dev, ABS_MT_POSITION_X, pdata->x_min, pdata->x_max, 0, 0);
-    input_set_abs_params(input_dev, ABS_MT_POSITION_Y, pdata->y_min, pdata->y_max, 0, 0);
-    input_set_abs_params(input_dev, ABS_MT_TOUCH_MAJOR, 0, 0xFF, 0, 0);
-#if FTS_REPORT_PRESSURE_EN
-    input_set_abs_params(input_dev, ABS_MT_PRESSURE, 0, 0xFF, 0, 0);
-#endif
+	input_set_abs_params(input_dev, ABS_MT_POSITION_X, pdata->x_min, pdata->x_max, 0, 0);
+	input_set_abs_params(input_dev, ABS_MT_POSITION_Y, pdata->y_min, pdata->y_max, 0, 0);
+	input_set_abs_params(input_dev, ABS_MT_TOUCH_MAJOR, 0, 0xFF, 0, 0);
 
-    err = input_register_device(input_dev);
-    if (err)
-    {
-        FTS_ERROR("Input device registration failed");
-        goto free_inputdev;
-    }
+	err = input_register_device(input_dev);
+	if (err)
+	{
+		PRINT_INFO("Input device registration failed");
+		goto free_inputdev;
+	}
 
-    return 0;
+	return 0;
 
 free_inputdev:
-    input_free_device(input_dev);
-    return err;
+	input_free_device(input_dev);
+	return err;
 }
 
 /*****************************************************************************
@@ -88,11 +87,12 @@ free_inputdev:
 static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {
 	struct mytp_data *data;
+	struct input_dev *input_dev;
 	int err;
 
 	PRINT_INFO("mytp prebo start!");
 
-	data = devm_kzalloc(&client->dev, sizeof(struct fts_ts_data), GFP_KERNEL);
+	data = devm_kzalloc(&client->dev, sizeof(struct mytp_data), GFP_KERNEL);
 	if (!data)
 	{
 		PRINT_INFO("[MEMORY]Failed to allocate memory");
@@ -106,10 +106,10 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 		return -ENOMEM;
 	}
 
-    data->input_dev = input_dev;
-    data->client = client;
+	data->input_dev = input_dev;
+	data->client = client;
 
-//	mytp_input_dev_init(client, data, input_dev, pdata);
+	mytp_input_dev_init(client, data, input_dev, pdata);
 
 	PRINT_INFO("mytp prebo end!");
 	return 0;
