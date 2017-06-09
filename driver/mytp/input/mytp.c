@@ -336,7 +336,7 @@ static __init int mytp_init(void)
 	ret = i2c_add_driver(&mytp_driver);
 	if ( ret != 0 )
 	{
-		PRINT_INFO("Focaltech touch screen driver init failed!");
+		PRINT_INFO("TP driver init failed!");
 	}
 	PRINT_INFO("mytp init end!");
 	return 0;
@@ -358,5 +358,5 @@ static __exit void mytp_exit(void)
 module_init(mytp_init);
 module_exit(mytp_exit);
 MODULE_AUTHOR("wanghan");
-MODULE_DESCRIPTION("FocalTech Touchscreen Driver (ic:ft5435)");
+MODULE_DESCRIPTION("TP Driver (ic:ft5435)");
 MODULE_LICENSE("GPL");
