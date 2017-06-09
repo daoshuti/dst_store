@@ -15,7 +15,7 @@
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
-#define PRINT_INFO(fmt, args...) printk(KERN_ERR "[TP][%s]"fmt"\n", __func__, ##args)
+#define PRINT_INFO(fmt, args...) printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
 
 #define MYTP_DRIVER_NAME 	"mytp_ft5435"
 
