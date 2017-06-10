@@ -225,8 +225,8 @@ free_inputdev:
 static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 {
 	struct mytp_platform_data *pdata;
-	struct mytp_data *data;
 	struct input_dev *input_dev;
+	struct mytp_data *data;
 	int err;
 
 	PRINT_INFO("mytp prebo start!");
@@ -275,9 +275,10 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 	data->input_dev = input_dev;
 	data->client = client;
+	data->pdata = pdata;
 
 	mytp_input_dev_init(client, data, input_dev, pdata);
-
+    
 	PRINT_INFO("mytp prebo end!");
 	return 0;
 }
