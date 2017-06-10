@@ -58,6 +58,8 @@ struct mytp_data
 	struct i2c_client *client;
 	struct input_dev *input_dev;
 	struct mytp_platform_data *pdata;
+	struct regulator *vdd;
+	struct regulator *vcc_i2c;
 };
 
 /****************************************************************************
@@ -277,7 +279,7 @@ reg_vdd_put:
 	return rc;
 }/*}}}2*/
 
-static int mytp_power_ctrl(struct fts_ts_data *data, int enable)
+static int mytp_power_ctrl(struct mytp_data *data, int enable)
 {/*{{{2*/
 	int rc;
 
