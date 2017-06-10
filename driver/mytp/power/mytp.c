@@ -1,7 +1,7 @@
 /****************************************************************************
   @Author: wanghan
   @Created Time : Wed 31 May 2017 02:55:52 PM CST
-  @File Name: /home/wanghan/tmp/mytp/mytp.c
+  @File Name: mytp.c
   @Description:
  ****************************************************************************
  * Header {{{1 
@@ -12,6 +12,8 @@
 #include <linux/of_gpio.h>
 #include <linux/input.h>
 #include <linux/input/mt.h>
+#include <linux/delay.h>
+#include <linux/regulator/consumer.h>
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
@@ -323,7 +325,7 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 	PRINT_INFO("mytp prebo start!");
 
-	/* 1. Get Platform data */
+	/* 1. Get Platform data {{{2 */
 	if (client->dev.of_node)
 	{
 		pdata = devm_kzalloc(&client->dev,
@@ -350,7 +352,9 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 		PRINT_INFO("Invalid pdata");
 		return -EINVAL;
 	}
+	/*}}}2*/
 
+	/* 2. Init Input Device {{{2 */
 	data = devm_kzalloc(&client->dev, sizeof(struct mytp_data), GFP_KERNEL);
 	if (!data)
 	{
@@ -370,8 +374,12 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	data->pdata = pdata;
 
 	mytp_input_dev_init(client, data, input_dev, pdata);
-    
+	/*}}}2*/
+   
+	/* 3. Power On {{{2 */
 	mytp_power_init(data);
+	mytp_power_ctrl(data, 1);
+	/*}}}2*/
 
 	PRINT_INFO("mytp prebo end!");
 	return 0;
