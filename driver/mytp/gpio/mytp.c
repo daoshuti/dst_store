@@ -314,6 +314,67 @@ static int mytp_power_ctrl(struct mytp_data *data, int enable)
 	return 0;
 }/*}}}2*/
 
+static int mytp_gpio_init(struct mytp_data *data)
+{/*{{{2*/
+	int err = 0;
+
+	/* request irq gpio */
+	if (gpio_is_valid(data->pdata->irq_gpio))
+	{
+		err = gpio_request(data->pdata->irq_gpio, "fts_irq_gpio");
+		if (err)
+		{
+			PRINT_INFO("[GPIO]irq gpio request failed");
+			goto err_irq_gpio_req;
+		}
+
+		err = gpio_direction_input(data->pdata->irq_gpio);
+		if (err)
+		{
+			PRINT_INFO("[GPIO]set_direction for irq gpio failed");
+			goto err_irq_gpio_dir;
+		}
+	}
+	/* request reset gpio */
+	if (gpio_is_valid(data->pdata->reset_gpio))
+	{
+		err = gpio_request(data->pdata->reset_gpio, "fts_reset_gpio");
+		if (err)
+		{
+			PRINT_INFO("[GPIO]reset gpio request failed");
+			goto err_irq_gpio_dir;
+		}
+
+		err = gpio_direction_output(data->pdata->reset_gpio, 1);
+		if (err)
+		{
+			PRINT_INFO("[GPIO]set_direction for reset gpio failed");
+			goto err_reset_gpio_dir;
+		}
+	}
+
+	return 0;
+
+err_reset_gpio_dir:
+	if (gpio_is_valid(data->pdata->reset_gpio))
+		gpio_free(data->pdata->reset_gpio);
+err_irq_gpio_dir:
+	if (gpio_is_valid(data->pdata->irq_gpio))
+		gpio_free(data->pdata->irq_gpio);
+err_irq_gpio_req:
+	return err;
+}/*}}}2*/
+
+static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
+{
+	gpio_direction_output(data->pdata->reset_gpio, 0);
+	msleep(20);
+	gpio_direction_output(data->pdata->reset_gpio, 1);
+	msleep(hdelayms);
+
+	return 0;
+}
+
 /*****************************************************************************
  * Probe {{{1
  *****************************************************************************/
@@ -381,6 +442,17 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	/* 3. Power On {{{2 */
 	mytp_power_init(data);
 	mytp_power_ctrl(data, 1);
+	/*}}}2*/
+
+	/* 4. Init GPIO and reset IC {{{2 */
+	err = mytp_gpio_init(data);
+	if (err < 0)
+	{
+		PRINT_INFO("[GPIO]Failed to configure the gpios");
+		goto free_gpio;
+	}
+
+	mytp_reset_proc(data,200);
 	/*}}}2*/
 
 	PRINT_INFO("mytp prebo end!");
