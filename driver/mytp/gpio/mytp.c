@@ -14,6 +14,7 @@
 #include <linux/input/mt.h>
 #include <linux/delay.h>
 #include <linux/regulator/consumer.h>
+#include <linux/gpio.h>
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
