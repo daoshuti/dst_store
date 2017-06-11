@@ -367,14 +367,14 @@ err_irq_gpio_req:
 }/*}}}2*/
 
 static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
-{
+{/*{{{2*/
 	gpio_direction_output(data->pdata->reset_gpio, 0);
 	msleep(20);
 	gpio_direction_output(data->pdata->reset_gpio, 1);
 	msleep(hdelayms);
 
 	return 0;
-}
+}/*}}}2*/
 
 /*****************************************************************************
  * Probe {{{1
@@ -458,6 +458,14 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 	PRINT_INFO("mytp prebo end!");
 	return 0;
+
+free_gpio:
+	if (gpio_is_valid(data->pdata->reset_gpio))
+		gpio_free(data->pdata->reset_gpio);
+	if (gpio_is_valid(data->pdata->irq_gpio))
+		gpio_free(data->pdata->irq_gpio);
+	PRINT_INFO("mytp probe fail!");
+	return -1;
 }
 
 /*****************************************************************************
