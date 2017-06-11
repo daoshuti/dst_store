@@ -15,6 +15,7 @@
 #include <linux/delay.h>
 #include <linux/regulator/consumer.h>
 #include <linux/gpio.h>
+#include <linux/interrupt.h>
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
@@ -376,6 +377,34 @@ static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
 	return 0;
 }/*}}}2*/
 
+void mytp_irq_disable(struct mytp_data *data)
+{
+	disable_irq_nosync(data->client->irq);
+}
+
+void mytp_irq_enable(struct mytp_data *data)
+{
+	enable_irq(data->client->irq);
+}
+
+static u32 g_count_irq = 0; 
+static irqreturn_t mytp_interrupt(int irq, void *dev_id)
+{
+	struct mytp_data *data = dev_id;
+	int ret = -1;
+
+	if (!data)
+	{
+		PRINT_INFO("[INTR]: Invalid fts_ts");
+		return IRQ_HANDLED;
+	}
+
+	g_count_irq++;
+	PRINT_INFO(" g_count_irq = %d", g_count_irq);
+
+	return IRQ_HANDLED;
+}
+
 /*****************************************************************************
  * Probe {{{1
  *****************************************************************************/
@@ -456,6 +485,21 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	mytp_reset_proc(data,200);
 	/*}}}2*/
 
+	/* 5. Init irq {{{2*/
+	err = request_threaded_irq(client->irq, NULL, mytp_interrupt,
+			pdata->irq_gpio_flags | IRQF_ONESHOT | IRQF_TRIGGER_FALLING,
+			client->dev.driver->name, data);
+	if (err)
+	{
+		PRINT_INFO("Request irq failed!");
+		goto free_gpio;
+	}
+
+	//mytp_irq_disable(data);
+
+	//mytp_irq_enable(data);
+	/*}}}2*/
+
 	PRINT_INFO("mytp prebo end!");
 	return 0;
 
@@ -477,6 +521,8 @@ static int mytp_remove(struct i2c_client *client)
 	struct mytp_data *data = i2c_get_clientdata(client);
 
 	PRINT_INFO("mytp remove start!");
+
+//	free_irq(client->irq, data);
 
 	input_unregister_device(data->input_dev);
 
