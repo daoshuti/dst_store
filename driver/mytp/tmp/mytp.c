@@ -674,7 +674,7 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 	/*}}}2*/
 
 	/* 5. Init irq {{{2*/
-	err = request_threaded_irq(client->irq, NULL, mytp_interrupt,
+	err = devm_request_threaded_irq(&client->dev, client->irq, NULL, mytp_interrupt,
 			pdata->irq_gpio_flags | IRQF_ONESHOT | IRQF_TRIGGER_FALLING,
 			client->dev.driver->name, data);
 	if (err)
