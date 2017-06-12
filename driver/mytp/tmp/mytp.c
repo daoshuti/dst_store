@@ -20,20 +20,30 @@
  * Define {{{1 
  ****************************************************************************/
 //debug
+#define mytp_debug_on                       1
+#if mytp_debug_on
 #define PRINT_INFO(fmt, args...)            printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
+#else
+#define PRINT_INFO(fmt, args...)
+#endif
+
 //tp info
 #define MYTP_DRIVER_NAME                    "mytp_ft5435"
+
 //tp config
 #define MYTP_MT_PROTOCOL_B_EN               1
 #define MYTP_MAX_POINTS                     10
+
 //device tree
 #define MYTP_COORDS_ARR_SIZE                4
+
 //power
 #define MYTP_VTG_MIN_UV                     2600000
 #define MYTP_VTG_MAX_UV                     3300000
 #define MYTP_I2C_VTG_MIN_UV                 1800000
 #define MYTP_I2C_VTG_MAX_UV                 1800000
 
+//tp args
 #define FTS_ONE_TCH_LEN                     6
 #define POINT_READ_BUF                      (3 + FTS_ONE_TCH_LEN * MYTP_MAX_POINTS)
 
