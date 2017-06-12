@@ -20,14 +20,23 @@
  * Define {{{1 
  ****************************************************************************/
 //debug
+#define MYTP_DEBUG_ON                       1
+#if MYTP_DEBUG_ON
 #define PRINT_INFO(fmt, args...)            printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
+#else
+#define PRINT_INFO(fmt, args...)
+#endif
+
 //tp info
 #define MYTP_DRIVER_NAME                    "mytp_ft5435"
+
 //tp config
 #define MYTP_MT_PROTOCOL_B_EN               1
 #define MYTP_MAX_POINTS                     10
+
 //device tree
 #define MYTP_COORDS_ARR_SIZE                4
+
 //power
 #define MYTP_VTG_MIN_UV                     2600000
 #define MYTP_VTG_MAX_UV                     3300000
@@ -53,6 +62,7 @@
 #define FTS_TOUCH_DOWN                      0
 #define FTS_TOUCH_UP                        1
 #define FTS_TOUCH_CONTACT                   2
+
 /****************************************************************************
  * struct {{{1
  ****************************************************************************/
