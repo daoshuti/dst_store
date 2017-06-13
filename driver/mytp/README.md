@@ -25,8 +25,8 @@
 ## 6. irq
 完成对中断的初始化。
 
-## 7. i2c communication
-在中断函数中完成i2c通信，获取i2c数据。
+## 7. i2c read
+使用i2c从TP中读取数据。
 
 ## 8. input report
 在获取数据后，使用input子系统上报。
