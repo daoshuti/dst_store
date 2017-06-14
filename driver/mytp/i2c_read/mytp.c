@@ -413,49 +413,8 @@ static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
 	return 0;
 }/*}}}2*/
 
-void mytp_irq_disable(struct mytp_data *data)
-{
-	disable_irq_nosync(data->client->irq);
-}
-
-void mytp_irq_enable(struct mytp_data *data)
-{
-	enable_irq(data->client->irq);
-}
-
-static u32 g_count_irq = 0; 
-static char g_sz_debug[1024] = {0};
-static void mytp_show_touch_buffer(u8 *buf, int point_num);
-static int mytp_read_touchdata(struct mytp_data *data);
-
-static irqreturn_t mytp_interrupt(int irq, void *dev_id)
-{
-	struct mytp_data *data = dev_id;
-	int ret = -1;
-
-	if (!data)
-	{
-		PRINT_INFO("[INTR]: Invalid fts_ts");
-		return IRQ_HANDLED;
-	}
-
-	g_count_irq++;
-	PRINT_INFO(" g_count_irq = %d", g_count_irq);
-
-	ret = mytp_read_touchdata(data);
-
-	return IRQ_HANDLED;
-}
-
-/************************************************************************
-* Name: fts_i2c_read
-* Brief: i2c read
-* Input: i2c info, write buf, write len, read buf, read len
-* Output: get data in the 3rd buf
-* Return: fail <0
-***********************************************************************/
 int fts_i2c_read(struct i2c_client *client, char *writebuf,int writelen, char *readbuf, int readlen)
-{
+{/*{{{2*/
     int ret;
 
     if (readlen > 0)
@@ -503,10 +462,34 @@ int fts_i2c_read(struct i2c_client *client, char *writebuf,int writelen, char *r
     }
 
     return ret;
-}
+}/*}}}2*/
+
+static char g_sz_debug[1024] = {0};
+static void mytp_show_touch_buffer(u8 *buf, int point_num)
+{/*{{{2*/
+	int len = point_num * FTS_ONE_TCH_LEN;
+	int count = 0;
+	int i;
+
+	memset(g_sz_debug, 0, 1024);
+	if (len > (POINT_READ_BUF-3))
+	{
+		len = POINT_READ_BUF-3;
+	}
+	else if (len == 0)
+	{
+		len += FTS_ONE_TCH_LEN;
+	}
+	count += sprintf(g_sz_debug, "%02X,%02X,%02X", buf[0], buf[1], buf[2]);
+	for (i = 0; i < len; i++)
+	{
+		count += sprintf(g_sz_debug+count, ",%02X", buf[i+3]);
+	}
+	PRINT_INFO("buffer: %s", g_sz_debug);
+}/*}}}2*/
 
 static int mytp_read_touchdata(struct mytp_data *data)
-{
+{/*{{{2*/
 	u8 buf[POINT_READ_BUF] = { 0 };
 	u8 pointid = FTS_MAX_ID;
 	int ret = -1;
@@ -568,30 +551,27 @@ static int mytp_read_touchdata(struct mytp_data *data)
 		return -1;
 	}
 	return 0;
-}
+}/*}}}2*/
 
-static void mytp_show_touch_buffer(u8 *buf, int point_num)
-{
-	int len = point_num * FTS_ONE_TCH_LEN;
-	int count = 0;
-	int i;
+static irqreturn_t mytp_interrupt(int irq, void *dev_id)
+{/*{{{2*/
+	struct mytp_data *data = dev_id;
+	static u32 g_count_irq = 0; 
+	int ret = -1;
 
-	memset(g_sz_debug, 0, 1024);
-	if (len > (POINT_READ_BUF-3))
+	if (!data)
 	{
-		len = POINT_READ_BUF-3;
+		PRINT_INFO("[INTR]: Invalid fts_ts");
+		return IRQ_HANDLED;
 	}
-	else if (len == 0)
-	{
-		len += FTS_ONE_TCH_LEN;
-	}
-	count += sprintf(g_sz_debug, "%02X,%02X,%02X", buf[0], buf[1], buf[2]);
-	for (i = 0; i < len; i++)
-	{
-		count += sprintf(g_sz_debug+count, ",%02X", buf[i+3]);
-	}
-	PRINT_INFO("buffer: %s", g_sz_debug);
-}
+
+	g_count_irq++;
+	PRINT_INFO(" g_count_irq = %d", g_count_irq);
+
+	ret = mytp_read_touchdata(data);
+
+	return IRQ_HANDLED;
+}/*}}}2*/
 
 /*****************************************************************************
  * Probe {{{1
