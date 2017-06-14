@@ -377,20 +377,10 @@ static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
 	return 0;
 }/*}}}2*/
 
-void mytp_irq_disable(struct mytp_data *data)
-{
-	disable_irq_nosync(data->client->irq);
-}
-
-void mytp_irq_enable(struct mytp_data *data)
-{
-	enable_irq(data->client->irq);
-}
-
-static u32 g_count_irq = 0; 
 static irqreturn_t mytp_interrupt(int irq, void *dev_id)
 {
 	struct mytp_data *data = dev_id;
+	static u32 g_count_irq = 0; 
 	int ret = -1;
 
 	if (!data)
@@ -494,10 +484,6 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 		PRINT_INFO("Request irq failed!");
 		goto free_gpio;
 	}
-
-	//mytp_irq_disable(data);
-
-	//mytp_irq_enable(data);
 	/*}}}2*/
 
 	PRINT_INFO("mytp prebo end!");
