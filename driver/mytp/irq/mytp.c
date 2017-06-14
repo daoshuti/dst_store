@@ -378,7 +378,7 @@ static int mytp_reset_proc(struct mytp_data *data, int hdelayms)
 }/*}}}2*/
 
 static irqreturn_t mytp_interrupt(int irq, void *dev_id)
-{
+{/*{{{2*/
 	struct mytp_data *data = dev_id;
 	static u32 g_count_irq = 0; 
 	int ret = -1;
@@ -393,7 +393,7 @@ static irqreturn_t mytp_interrupt(int irq, void *dev_id)
 	PRINT_INFO(" g_count_irq = %d", g_count_irq);
 
 	return IRQ_HANDLED;
-}
+}/*}}}2*/
 
 /*****************************************************************************
  * Probe {{{1
