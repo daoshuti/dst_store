@@ -13,13 +13,15 @@
 /****************************************************************************
  * Define {{{1 
  ****************************************************************************/
-#define PRINT_INFO(fmt, args...) printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
+#define PRINT_INFO(fmt, args...)                printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
 
-#define MYTP_DRIVER_NAME 		"mytp_ft5435"
+#define MYTP_DRIVER_NAME                        "mytp_gt917d"
 
-#define MYTP_MAX_POINTS 		10
-#define MYTP_COORDS_ARR_SIZE	4
+#define MYTP_COORDS_ARR_SIZE                    4
+#define MYTP_MAX_POINTS                         10
 
+#define GTP_CONFIG_MIN_LENGTH                   186
+#define GTP_CONFIG_MAX_LENGTH                   240
 /****************************************************************************
  * struct {{{1
  ****************************************************************************/
@@ -29,11 +31,8 @@ struct mytp_platform_data
 	u32 irq_gpio_flags;
 	u32 reset_gpio;
 	u32 reset_gpio_flags;
-	bool have_key;
-	u32 key_number;
-	u32 keys[4];
-	u32 key_y_coord;
-	u32 key_x_coords[4];
+	u32 power_ldo_gpio;
+	u32 power_ldo_gpio_flags;
 	u32 x_max;
 	u32 y_max;
 	u32 x_min;
@@ -45,9 +44,33 @@ struct mytp_platform_data
  * function {{{1
  ****************************************************************************/
 
-static int mytp_get_dt_coords(struct device *dev, char *name,
-		struct mytp_platform_data *pdata)
-{
+/**
+ * gtp_parse_dt_cfg - parse config data from devices tree.
+ * @dev: device that this driver attached.
+ * @cfg: pointer of the config array.
+ * @cfg_len: pointer of the config length.
+ * @sid: sensor id.
+ * Return: 0-succeed, -1-faileds
+ */
+int gtp_parse_dt_cfg(struct device *dev, u8 *cfg, int *cfg_len, u8 sid)
+{/*{{{2*/
+	struct device_node *np = dev->of_node;
+	struct property *prop;
+	char cfg_name[18];
+
+	snprintf(cfg_name, sizeof(cfg_name), "goodix,cfg-group%d", sid);
+	prop = of_find_property(np, cfg_name, cfg_len);
+	if (!prop || !prop->value || *cfg_len == 0 || *cfg_len > GTP_CONFIG_MAX_LENGTH) {
+		PRINT_INFO("Unable get config data form devices tree");
+		return -1;/* failed */
+	} else {
+		memcpy(cfg, prop->value, *cfg_len);
+		return 0;
+	}
+}/*}}}2*/
+
+static int mytp_get_dt_coords(struct device *dev, char *name, struct mytp_platform_data *pdata)
+{/*{{{2*/
 	u32 coords[MYTP_COORDS_ARR_SIZE];
 	struct property *prop;
 	struct device_node *np = dev->of_node;
@@ -74,11 +97,11 @@ static int mytp_get_dt_coords(struct device *dev, char *name,
 		return rc;
 	}
 
-	if (!strcmp(name, "focaltech,display-coords"))
+	if (!strcmp(name, "goodix,display-coords"))
 	{
 		pdata->x_min = coords[0];
-		pdata->y_min = coords[1];
-		pdata->x_max = coords[2];
+		pdata->x_max = coords[1];
+		pdata->y_min = coords[2];
 		pdata->y_max = coords[3];
 	}
 	else
@@ -88,64 +111,43 @@ static int mytp_get_dt_coords(struct device *dev, char *name,
 	}
 
 	return 0;
-}
+}/*}}}2*/
 
 static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
-{
+{/*{{{2*/
 	int rc;
 	struct device_node *np = dev->of_node;
 	u32 temp_val;
 
-	rc = mytp_get_dt_coords(dev, "focaltech,display-coords", pdata);
+	/* Get display coords {{{3 */
+	rc = mytp_get_dt_coords(dev, "goodix,display-coords", pdata);
 	if (rc)
-		PRINT_INFO("Unable to get display-coords");
-
-	/* key */
-	pdata->have_key = of_property_read_bool(np, "focaltech,have-key");
-	if (pdata->have_key)
 	{
-		rc = of_property_read_u32(np, "focaltech,key-number", &pdata->key_number);
-		if (rc)
-		{
-			PRINT_INFO("Key number undefined!");
-		}
-		rc = of_property_read_u32_array(np, "focaltech,keys",
-				pdata->keys, pdata->key_number);
-		if (rc)
-		{
-			PRINT_INFO("Keys undefined!");
-		}
-		rc = of_property_read_u32(np, "focaltech,key-y-coord", &pdata->key_y_coord);
-		if (rc)
-		{
-			PRINT_INFO("Key Y Coord undefined!");
-		}
-		rc = of_property_read_u32_array(np, "focaltech,key-x-coords",
-				pdata->key_x_coords, pdata->key_number);
-		if (rc)
-		{
-			PRINT_INFO("Key X Coords undefined!");
-		}
-		PRINT_INFO("%d: (%d, %d, %d), [%d, %d, %d][%d]",
-				pdata->key_number, pdata->keys[0], pdata->keys[1], pdata->keys[2],
-				pdata->key_x_coords[0], pdata->key_x_coords[1], pdata->key_x_coords[2],
-				pdata->key_y_coord);
+		PRINT_INFO("Unable to get display-coords");
 	}
 
-	/* reset, irq gpio info */
-	pdata->reset_gpio = of_get_named_gpio_flags(np, "focaltech,reset-gpio", 0, &pdata->reset_gpio_flags);
+	/* Get reset, irq gpio info {{{3 */
+	pdata->reset_gpio = of_get_named_gpio_flags(np, "goodix,reset-gpio", 0, &pdata->reset_gpio_flags);
 	if (pdata->reset_gpio < 0)
 	{
 		PRINT_INFO("Unable to get reset_gpio");
 	}
 
-	pdata->irq_gpio = of_get_named_gpio_flags(np, "focaltech,irq-gpio", 0, &pdata->irq_gpio_flags);
+	pdata->irq_gpio = of_get_named_gpio_flags(np, "goodix,irq-gpio", 0, &pdata->irq_gpio_flags);
 	if (pdata->irq_gpio < 0)
 	{
 		PRINT_INFO("Unable to get irq_gpio");
 	}
 
-	rc = of_property_read_u32(np, "focaltech,max-touch-number", &temp_val);
+	/* Get power ldo gpio info {{{3 */
+	pdata->power_ldo_gpio = of_get_named_gpio(np, "goodix,power_ldo-gpio", 0, &pda->power_ldo_gpio_flags);
+	if (power_ldo_gpio < 0)
+	{
+		PRINT_INFO("Unable to get power_ldo_gpio");
+	}
+
+	/* Get max_touch_num {{{3 */
+	rc = of_property_read_u32(np, "goodix,max-touch-number", &temp_val);
 	if (!rc)
 	{
 		pdata->max_touch_number = temp_val;
@@ -158,7 +160,7 @@ static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
 	}
 
 	return 0;
-}
+}/*}}}2*/
 
 /*****************************************************************************
  * Probe {{{1
@@ -171,7 +173,7 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 
 	PRINT_INFO("mytp prebo start!");
 
-	/* 1. Get Platform data */
+	/* 1. Get Platform data {{{2*/
 	if (client->dev.of_node)
 	{
 		pdata = devm_kzalloc(&client->dev,
@@ -198,7 +200,7 @@ static int mytp_probe(struct i2c_client *client, const struct i2c_device_id *id)
 		PRINT_INFO("Invalid pdata");
 		return -EINVAL;
 	}
-
+	/*}}}2*/
 
 	PRINT_INFO("mytp prebo end!");
 	return 0;
@@ -228,7 +230,7 @@ static const struct i2c_device_id mytp_id[] =
 
 static const struct of_device_id mytp_match_table[] =
 {
-	{ .compatible = "focaltech,fts", },
+	{ .compatible = "goodix,gt917d", },
 	{ },
 };
 
@@ -276,5 +278,5 @@ static __exit void mytp_exit(void)
 module_init(mytp_init);
 module_exit(mytp_exit);
 MODULE_AUTHOR("wanghan");
-MODULE_DESCRIPTION("TP Driver (ic:ft5435)");
+MODULE_DESCRIPTION("TP Driver (ic:gt917d)");
 MODULE_LICENSE("GPL");
