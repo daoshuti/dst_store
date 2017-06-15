@@ -14,7 +14,7 @@
  ****************************************************************************/
 #define PRINT_INFO(fmt, args...) printk(KERN_ERR "[MYTP][%s]"fmt"\n", __func__, ##args)
 
-#define MYTP_DRIVER_NAME 	"mytp_ft5435"
+#define MYTP_DRIVER_NAME 	"mytp_gt917d"
 
 /*****************************************************************************
 * Probe {{{1
@@ -51,7 +51,7 @@ static const struct i2c_device_id mytp_id[] =
 
 static const struct of_device_id mytp_match_table[] =
 {
-    { .compatible = "focaltech,fts", },
+    { .compatible = "goodix,gt917d", },
     { },
 };
 
@@ -99,5 +99,5 @@ static __exit void mytp_exit(void)
 module_init(mytp_init);
 module_exit(mytp_exit);
 MODULE_AUTHOR("wanghan");
-MODULE_DESCRIPTION("TP Driver (ic:ft5435)");
+MODULE_DESCRIPTION("TP Driver (ic:gt917d)");
 MODULE_LICENSE("GPL");
