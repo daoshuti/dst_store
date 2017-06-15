@@ -45,9 +45,8 @@ struct mytp_platform_data
  * function {{{1
  ****************************************************************************/
 
-static int mytp_get_dt_coords(struct device *dev, char *name,
-		struct mytp_platform_data *pdata)
-{
+static int mytp_get_dt_coords(struct device *dev, char *name, struct mytp_platform_data *pdata)
+{/*{{{2*/
 	u32 coords[MYTP_COORDS_ARR_SIZE];
 	struct property *prop;
 	struct device_node *np = dev->of_node;
@@ -88,19 +87,20 @@ static int mytp_get_dt_coords(struct device *dev, char *name,
 	}
 
 	return 0;
-}
+}/*}}}2*/
 
 static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
-{
+{/*{{{2*/
 	int rc;
 	struct device_node *np = dev->of_node;
 	u32 temp_val;
 
+	/* Get display coords {{{3 */
 	rc = mytp_get_dt_coords(dev, "focaltech,display-coords", pdata);
 	if (rc)
 		PRINT_INFO("Unable to get display-coords");
 
-	/* key */
+	/* Get key info {{{3 */
 	pdata->have_key = of_property_read_bool(np, "focaltech,have-key");
 	if (pdata->have_key)
 	{
@@ -132,7 +132,7 @@ static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
 				pdata->key_y_coord);
 	}
 
-	/* reset, irq gpio info */
+	/* Get reset, irq gpio info {{{3 */
 	pdata->reset_gpio = of_get_named_gpio_flags(np, "focaltech,reset-gpio", 0, &pdata->reset_gpio_flags);
 	if (pdata->reset_gpio < 0)
 	{
@@ -145,6 +145,7 @@ static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
 		PRINT_INFO("Unable to get irq_gpio");
 	}
 
+	/* Get max_touch_num {{{3 */
 	rc = of_property_read_u32(np, "focaltech,max-touch-number", &temp_val);
 	if (!rc)
 	{
@@ -156,9 +157,10 @@ static int mytp_parse_dt(struct device *dev, struct mytp_platform_data *pdata)
 		PRINT_INFO("Unable to get max-touch-number");
 		pdata->max_touch_number = MYTP_MAX_POINTS;
 	}
+	/*}}}3*/
 
 	return 0;
-}
+}/*}}}2*/
 
 /*****************************************************************************
  * Probe {{{1
