@@ -10,15 +10,23 @@
 " To use VIM settings, out of VI compatible mode.
 set nocompatible
 
+" Set Dos Mode
+if has('win32') || has('win64')
+    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+endif
+
 " Pathogen
 " 启动pathogen插件管理器
 execute pathogen#infect() 
 
-" Enable file type detection.
-filetype plugin indent on " 开启三个功能：文件类型检查、插件、缩进
-
 " Syntax highlighting.
-syntax on
+if has("syntax")
+    syntax on
+endif
+
+" Enable file type detection.
+filetype on
+filetype plugin indent on " 开启三个功能：文件类型检查、插件、缩进
 
 " Setting colorscheme
 "colorscheme industry " 配色主题的名称设置为industry
@@ -42,36 +50,51 @@ set foldmethod=marker	" 代码折叠(标签折叠方式)
 "set foldmethod=indent	" 代码折叠（缩进折叠方式）
 "set foldmethod=syntax	" 代码折叠（语法折叠方式）
 set foldcolumn=0		" 每行前面有0个折叠标识列
-set guioptions-=T
-set guioptions-=m
-set guioptions-=r
-set guioptions-=l
 set helpheight=10
-set helplang=cn		" 帮助系统设置为中文
+set helplang=cn       " 帮助系统设置为中文
 set hidden
-set history=100		" 历史记录保留100条
+set history=1000      " 历史记录保留1000条
 set hlsearch
-set ignorecase		" 检索时忽略大小写
+set ignorecase        " 检索时忽略大小写
 set incsearch
-set laststatus=2	" 指定何时显示状态行  0.永远没有  1.只有分割窗口时(默认值)  2.总是存在
-set mouse=a			" 可以使用鼠标
-set number			" 显示行号
+set laststatus=2      " 指定何时显示状态行
+"                          " 0 永远没有
+"                          " 1 只有分割窗口时(默认值)
+"                          " 2 总是存在
+set mouse=a         " 可以使用鼠标
+set number          " 显示行号
 set pumheight=10
 set ruler
 set scrolloff=5
 set shiftwidth=4
 set showcmd
-set smartindent		" 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
+set smartindent	    " 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
 set smartcase
-set tabstop=4		" 制表符为4
+set tabstop=4       " 制表符为4
+set expandtab       " 制表符替换为空格
+"set noexpandtab       " noexpand tabs into spaces  将tab不扩展成空格
 set termencoding=utf-8
 set textwidth=80
 set whichwrap=h,l
 set wildignore=*.bak,*.o,*.e,*~
 set wildmenu
 set wildmode=list:longest,full
-set nowrap			" 禁止文字自动换行
-set noswapfile		" 不使用swapfile文件（不能灾难恢复）
+set nowrap          " 禁止文字自动换行
+set noswapfile      " 不使用swapfile文件（不能灾难恢复）
+
+" gui settings
+if has("gui_running")
+    set guioptions-=T " no toolbar
+    set guioptions-=r " no right-hand scrollbar
+    set guioptions-=R " no right-hand vertically scrollbar
+    set guioptions-=l " no left-hand scrollbar
+    set guioptions-=L " no left-hand vertically scrollbar
+    autocmd GUIEnter * simalt ~x " window width and height
+    source $VIMRUNTIME/delmenu.vim " the original menubar has an error on win32, so
+    source $VIMRUNTIME/menu.vim    " use this menubar
+    language messages zh_CN.utf-8 " use chinese messages if has
+    set guifont=Consolas:h14
+endif
 
 " }}}1
 " AUTO COMMANDS:
@@ -80,55 +103,55 @@ set noswapfile		" 不使用swapfile文件（不能灾难恢复）
 autocmd BufNewFile *.c,*.cpp,*.sh,*.py,*.java exec ":call SetTitle()"                                                                                       
 "定义函数SetTitle，自动插入文件头
 func SetTitle()
-	"如果文件类型为.c或者.cpp文件
-	if (&filetype == 'c' || &filetype == 'cpp')
-		call setline(1, "/*************************************************************************")  
-		call setline(2, "\ @Author: wanghan")  
-		call setline(3, "\ @Created Time : ".strftime("%c"))  
-		call setline(4, "\ @File Name: ".expand("%"))  
-		call setline(5, "\ @Description:")  
-		call setline(6, " ************************************************************************/")  
-		call setline(7,"")  
-	endif
-	"如果文件类型为.sh文件
-	if &filetype == 'sh'  
-		call setline(1, "\#!/bin/bash")
-		call setline(2, "\# Author: wanghan")
-		call setline(3, "\# Created Time : ".strftime("%c"))
-		call setline(4, "\# File Name: ".expand("%"))
-		call setline(5, "\# Description:")
-		call setline(6,"")
-	endif
-	"如果文件类型为.py文件
-	if &filetype == 'python'
-		call setline(1, "\#!/usr/bin/env python")
-		call setline(2, "\# -*- coding=utf8 -*-")
-		call setline(3, "\"\"\"")
-		call setline(4, "\# Author: wanghan")
-		call setline(5, "\# Created Time : ".strftime("%c"))
-		call setline(6, "\# File Name: ".expand("%"))
-		call setline(7, "\# Description:")
-		call setline(8, "\"\"\"")
-		call setline(9,"")
-	endif
-	"如果文件类型为.java文件
-	if &filetype == 'java'  
-		call setline(1, "//coding=utf8")  
-		call setline(2, "/**")  
-		call setline(3, "\ *\ @Author: wanghan")  
-		call setline(4, "\ *\ @Created Time : ".strftime("%c"))  
-		call setline(5, "\ *\ @File Name: ".expand("%"))  
-		call setline(6, "\ *\ @Description:")  
-		call setline(7, "\ */")  
-		call setline(8,"")  
-	endif
+    "如果文件类型为.c或者.cpp文件
+    if (&filetype == 'c' || &filetype == 'cpp')
+        call setline(1, "/*************************************************************************")
+        call setline(2, "\ @Author: wanghan")
+        call setline(3, "\ @Created Time : ".strftime("%c"))
+        call setline(4, "\ @File Name: ".expand("%"))
+        call setline(5, "\ @Description:")
+        call setline(6, " ************************************************************************/")
+        call setline(7,"")
+    endif
+    "如果文件类型为.sh文件
+    if &filetype == 'sh'
+        call setline(1, "\#!/bin/bash")
+        call setline(2, "\# Author: wanghan")
+        call setline(3, "\# Created Time : ".strftime("%c"))
+        call setline(4, "\# File Name: ".expand("%"))
+        call setline(5, "\# Description:")
+        call setline(6,"")
+    endif
+    "如果文件类型为.py文件
+    if &filetype == 'python'
+        call setline(1, "\#!/usr/bin/env python")
+        call setline(2, "\# -*- coding=utf8 -*-")
+        call setline(3, "\"\"\"")
+        call setline(4, "\# Author: wanghan")
+        call setline(5, "\# Created Time : ".strftime("%c"))
+        call setline(6, "\# File Name: ".expand("%"))
+        call setline(7, "\# Description:")
+        call setline(8, "\"\"\"")
+        call setline(9,"")
+    endif
+    "如果文件类型为.java文件
+    if &filetype == 'java'
+        call setline(1, "//coding=utf8")
+        call setline(2, "/**")
+        call setline(3, "\ *\ @Author: wanghan")
+        call setline(4, "\ *\ @Created Time : ".strftime("%c"))
+        call setline(5, "\ *\ @File Name: ".expand("%"))
+        call setline(6, "\ *\ @Description:")
+        call setline(7, "\ */")
+        call setline(8,"")
+    endif
 endfunc
 " 自动将光标定位到末尾
 autocmd BufNewFile * normal G
 
 " }}}1
 " SYSTEM SHORTCUT SETTINGS:
-"  {{{1
+" {{{1
 " Set mapleader
 let mapleader=","
 " Space to command mode.
@@ -158,27 +181,27 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 " 显示彩色的括号
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 let g:rainbow_conf = {
-			\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-			\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-			\	'operators': '_,_',
-			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-			\	'separately': {
-			\		'*': {},
-			\		'tex': {
-			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-			\		},
-			\		'lisp': {
-			\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-			\		},
-			\		'vim': {
-			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-			\		},
-			\		'html': {
-			\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-			\		},
-			\		'css': 0,
-			\	}
-			\}
+            \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+            \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+            \	'operators': '_,_',
+            \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+            \	'separately': {
+            \		'*': {},
+            \		'tex': {
+            \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+            \		},
+            \		'lisp': {
+            \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+            \		},
+            \		'vim': {
+            \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+            \		},
+            \		'html': {
+            \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+            \		},
+            \		'css': 0,
+            \	}
+            \}
 
 " 配置Taglist插件
 let g:Tlist_Auto_Open=1				" 默认打开Taglist窗口
@@ -205,13 +228,13 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " 配置cscope
 if has("cscope")
-	set csto=1
-	set cst
-	set nocsverb
-	if filereadable("cscope.out")
-		cs add cscope.out
-	endif
-	set csverb
+    set csto=1
+    set cst
+    set nocsverb
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
 endif
 
 " 配置OmniCppComplete插件
@@ -249,46 +272,46 @@ source $VIMRUNTIME/ftplugin/man.vim
 
 " <F9><F10><F12>快捷键依赖的运行shell脚本的函数
 function! RunShell(Msg, Shell)
-	echo a:Msg . '...'
-	call system(a:Shell)
-	echon 'done'
+    echo a:Msg . '...'
+    call system(a:Shell)
+    echon 'done'
 endfunction
 
 let s:f6_flag=0
 let s:f7_flag=0
 " <F6>快捷键依赖的运行vimscript脚本的函数
 function F6_shell()
-	if (s:f6_flag == 0)
-		set paste
-		set nonumber
-		if (s:f7_flag == 1)
-			set foldcolumn=0
-			set foldmethod=marker
-		endif
-		let s:f6_flag=1
-	else
-		set nopaste
-		set number
-		if (s:f7_flag == 1)
-			set foldcolumn=5
-			set foldmethod=indent
-		endif
-		let s:f6_flag=0
-	endif
+    if (s:f6_flag == 0)
+        set paste
+        set nonumber
+        if (s:f7_flag == 1)
+            set foldcolumn=0
+            set foldmethod=marker
+        endif
+        let s:f6_flag=1
+    else
+        set nopaste
+        set number
+        if (s:f7_flag == 1)
+            set foldcolumn=5
+            set foldmethod=indent
+        endif
+        let s:f6_flag=0
+    endif
 endfunction
 
 
 " <F7>快捷键依赖的运行vimscript脚本的函数
 function F7_shell()
-	if (s:f7_flag == 0)
-		set foldcolumn=5
-		set foldmethod=indent
-		let s:f7_flag=1
-	else
-		set foldcolumn=0
-		set foldmethod=marker
-		let s:f7_flag=0
-	endif
+    if (s:f7_flag == 0)
+        set foldcolumn=5
+        set foldmethod=indent
+        let s:f7_flag=1
+    else
+        set foldcolumn=0
+        set foldmethod=marker
+        let s:f7_flag=0
+    endif
 endfunction
 
 " ------------------
