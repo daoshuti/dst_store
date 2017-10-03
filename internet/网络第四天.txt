@@ -1,0 +1,104 @@
+TCP的并发服务器:
+1、创建套接字
+2、填充服务器的地址结构哦
+3、绑定
+4、监听
+5、
+signal(SIGCHLD,SIG_IGN);
+while(1)
+{
+	connfd = accept(sockfd,);
+	
+	pid = fork();
+	
+	if(pid == -1)
+	{
+	}
+	else if(pid == 0)用于客户端
+	{
+		close(sockfd);
+#if 0	
+		pid1 = fork();
+		
+		if(pid1 == -1)
+		{
+		
+		}
+		else if(pid1 == 0)
+		{
+			while(1)
+			{
+				recv();
+			}
+		}
+		else 
+		{
+			exit(0);
+		}
+#endif
+		while(1)
+		{
+			recv();
+		}
+	}
+	else //用于服务器
+	{
+//		wait(NULL);
+		close(connfd);
+	}
+}
+
+IO模型:
+阻塞:读阻塞(没有数据，有数据但是缓存区没满)
+非阻塞:1、fd = open("1.txt",O_RDONLY | O_CREAT | O_NONBLOCK,0664);
+	   2、flag = fcntl(fd,F_GETFL);
+		  flag |= O_NONBLOCK;
+		  fcntl(fd,F_SETFL,flag);
+		  
+异步:由IO操作会产生相应的SIGIO信号，使用O_ASYNC
+
+void func(int signo)
+{
+	if(signo == SIGIO)
+	{
+		从有名管道读取数据
+	}
+}
+
+	 main()
+	 {
+		
+		signal(SIGIO,func);
+		mkfifo("fifo",0664);
+		
+		fd = open("fifo",O_RDONLY);
+		
+		flag = fcntl(fd,F_GETFL);
+		flag |= O_ASYNC;
+		fcntl(fd,F_SETFL,flag);
+		
+		fcntl(fd,F_SETOWN,getpid());//注册信号
+		
+		while(1)
+		{
+			printf("end\n");
+		}
+	 }
+
+多路复用:
+n = select(最大文件描述符+1，读表，写表，其它表，超时);
+
+返回值出错等于-1 
+返回值为0时候代表超时
+返回值可能为1、2、3
+
+所谓的表指的是存放一个整型数组的结构体，这个整型数组存放的是文件描述符
+fd_set
+
+FD_SET(文件描述符，表);
+FD_ISSET(文件描述符，表);判断这个文件描述符是否在这个表中
+FD_ZERO(表)；清0文件描述符表
+FD_CLR(文件描述符，表);从表中删除指定的文件描述符
+
+select()函数的本质:如果没有就绪的文件描述符则select会阻塞，不管文件描述符表中哪个文件描述符就绪都可以唤醒select函数。
+				   只要有就绪的文件描述符，则表中其它的文件描述符会被清空。

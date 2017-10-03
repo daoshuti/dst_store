@@ -1,0 +1,183 @@
+tcp的select并发服务器:
+
+1、创建套接字
+2、填充服务器地址结构
+3、绑定
+4、监听
+5、
+
+fd_set readfds;
+fd_set currentfds;
+
+FD_ZERO(&readfds);
+FD_ZERO(&currentfds);
+
+FD_SET(sockfd,&readfds);
+
+int maxfd = sockfd;
+while(1)
+{
+	currentfds = readfds;
+	n = select(maxfd + 1,&currentfds,NULL,NULL,NULL);
+	
+	if(n == -1)
+	{
+		报错
+	}
+	if(n == 0)
+	{
+		超时
+	}
+	
+	if(FD_ISSET(sockfd,&currentfds) != 0)
+	{
+		connfd = accept(sockfd,NULL,NULL);
+		
+		if(connfd > maxfd)
+			maxfd = connfd;
+			
+		FD_SET(connfd,&readfds);
+	}
+	
+	for(i = 3;i < maxfd + 1;i ++)
+	{
+		if(i == sockfd)
+			continue;
+			
+		if(FD_ISSET(i,&currentfds))
+		{
+			recvlen = recv(i,);
+			
+			if(recvlen == -1)
+			{
+				出错
+			}
+			if(recvlen == 0)
+			{
+				close(i);
+				FD_CLR(i,&readfds);
+				
+				if(i == maxfd)
+				{
+					while(maxfd --)
+					{
+						if(FD_ISSET(maxfd,&readfds))
+							break; 
+					}
+				}
+				
+			}
+			else 
+			{
+				收到数据后输出
+			}
+		}
+	}
+} 
+
+超时检测:
+1、select函数最后一个参数添加超时结构体
+	struct timeval t;
+	
+	t.tv_sec = 5;
+	t.tv_usec = 0;
+2、任何一个文件描述符具有超时属性
+	struct timeval t;	
+	t.tv_sec = 5;
+	t.tv_usec = 0;
+	setsockopt(文件描述符,SOL_SOCKET,SO_RCVTIMEO,&t,sizeof(t));
+	
+3、使用alarm函数来完成超时
+	
+	sigaction(int signum,struct sigaction *act,struct sigaction *oldact);
+
+	struct sigaction act;
+	
+	act.sa_handler = 中断函数名;
+	act.sa_flags = 0;
+	act.sa_flags &= ~SA_RESTART
+	sigaction(SIGALRM,&act,NULL);
+
+
+172.27.1.0  配合 255.255.255.0
+
+11111111 11111111 11000000 000000
+
+主机号为全1的地址是广播地址
+
+广播:节省服务器的负载，但是也会造成局域网内部其他主机比较卡(因为其他主机也会无条件接收广播数据包)
+广播地址转化成的ff:ff:ff:ff:ff:ff
+
+广播和组播只能用UDP
+
+广播发送端模型:
+1、创建套接字
+2、填充服务器(广播地址)地址结构
+	int on = 1; 
+3、使能广播权限setsockopt(sockfd,SOL_SOCKET,SO_BROADCAST,&on,sizeof(on));
+4、发送数据
+
+
+广播接收端:
+1、创建套接字 
+2、填充服务器(广播地址)的地址结构
+3、绑定 
+4、接收数据
+
+
+组播:D类IP专门用于组播224.0.0.0 - 239.255.255.255 (这些范围内的D类ip，每个地址都是一个小组，每个小组都可以存放A,B,C类的地址)
+发送端数据帧:以太网头+udp头(包含某个d类ip)+应用层头+数据
+
+组播地址转化为mac地址特点:前三个字节一定是01:00;5e，紧跟着的后面的二进制第一位一定是0，后面剩下的23位就是组播地址的后23位
+ 
+组播发送端: 
+1、创建套接字
+2、填充服务器(组播地址)地址结构
+3、发送数据
+
+组播接收端:
+1、创建套接字 
+2、填充服务器(组播的地址)的地址结构
+3、绑定 
+4、将本机ip加入到某个组播地址中(使用到的函数是setsockopt,man 7 ip)
+5、接收数据
+
+b c d - l p s
+
+数据库:维护了一些文件,每个文件中都可以维护一张或者多张表。
+
+创建或则打开数据库文件:sqlite3 1.db
+在数据库文件中创建表: create table 表名字(列名1，列名2,....,列名n);
+查询数据文件有哪些表格:.schema
+
+插入信息到表中:insert into 表名字 values('字符串类的数据',数字类的数据);
+查询表中所有信息:select * from 表名字;
+查询指定的信息:select * from 表名字 where 列名字=列内容;
+
+删除表中指定的内容:delete from 表名字 where 列名字=列内容;
+例子:假设要删除名字为a并且分数为100的某行数据:delete from 表名字 where name='a' and score=100;
+
+删除表:drop table 表名字;
+
+修改表中内容:update 表名字  set 列名1=内容1，列名2=内容2,.....列名n=内容n where 列名=内容;
+
+添加列:alter table 表名字 add column 需呀添加的列名字 default 添加列中默认的值;
+
+
+int sqlite3_exec(文件描述符，数据库执行命令，回调函数，给回调函数第一个参数传参的，报错);
+
+回调函数什么时候不使用？当前面的命令执行一次后就会出现结果，则不需要回调。
+
+int (*callback)(void *,int,char **,char **);
+第一个参数，是sqlite3_exec函数的第四个参数的形参
+第二个参数，代表数据库表中列的个数
+第三个参数，本身是一个char *f_value[];这个数组存放了每行中各个数据的首地址。
+第四个参数，本身是一个char *f_name[];这个数组存放了每行中各个字段名称的首地址。
+
+
+
+
+
+
+
+
