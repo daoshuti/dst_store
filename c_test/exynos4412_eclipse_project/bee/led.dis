@@ -1,0 +1,115 @@
+
+led.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+40001000 <_start>:
+40001000:	e1a00000 	nop			; (mov r0, r0)
+40001004:	e59f0048 	ldr	r0, [pc, #72]	; 40001054 <delay2+0xc>
+40001008:	e5901000 	ldr	r1, [r0]
+4000100c:	e3c1100f 	bic	r1, r1, #15
+40001010:	e3811001 	orr	r1, r1, #1
+40001014:	e5801000 	str	r1, [r0]
+
+40001018 <loop>:
+40001018:	e59f0038 	ldr	r0, [pc, #56]	; 40001058 <delay2+0x10>
+4000101c:	e5901000 	ldr	r1, [r0]
+40001020:	e3811001 	orr	r1, r1, #1
+40001024:	e5801000 	str	r1, [r0]
+40001028:	e59f502c 	ldr	r5, [pc, #44]	; 4000105c <delay2+0x14>
+
+4000102c <delay1>:
+4000102c:	e2555001 	subs	r5, r5, #1
+40001030:	1afffffd 	bne	4000102c <delay1>
+40001034:	e59f001c 	ldr	r0, [pc, #28]	; 40001058 <delay2+0x10>
+40001038:	e5901000 	ldr	r1, [r0]
+4000103c:	e3c11001 	bic	r1, r1, #1
+40001040:	e5801000 	str	r1, [r0]
+40001044:	e59f5010 	ldr	r5, [pc, #16]	; 4000105c <delay2+0x14>
+
+40001048 <delay2>:
+40001048:	e2555001 	subs	r5, r5, #1
+4000104c:	1afffffd 	bne	40001048 <delay2>
+40001050:	eafffff0 	b	40001018 <loop>
+40001054:	114000a0 	smlaltbne	r0, r0, r0, r0	; <UNPREDICTABLE>
+40001058:	114000a4 	smlaltbne	r0, r0, r4, r0	; <UNPREDICTABLE>
+4000105c:	000fffff 	strdeq	pc, [pc], -pc	; <UNPREDICTABLE>
+
+Disassembly of section .debug_aranges:
+
+00000000 <.debug_aranges>:
+   0:	0000001c 	andeq	r0, r0, ip, lsl r0
+   4:	00000002 	andeq	r0, r0, r2
+   8:	00040000 	andeq	r0, r4, r0
+   c:	00000000 	andeq	r0, r0, r0
+  10:	40001000 	andmi	r1, r0, r0
+  14:	00000060 	andeq	r0, r0, r0, rrx
+	...
+
+Disassembly of section .debug_info:
+
+00000000 <.debug_info>:
+   0:	00000042 	andeq	r0, r0, r2, asr #32
+   4:	00000002 	andeq	r0, r0, r2
+   8:	01040000 	mrseq	r0, (UNDEF: 4)
+   c:	00000000 	andeq	r0, r0, r0
+  10:	40001000 	andmi	r1, r0, r0
+  14:	40001060 	andmi	r1, r0, r0, rrx
+  18:	2e64656c 	cdpcs	5, 6, cr6, cr4, cr12, {3}
+  1c:	3a460073 	bcc	11801f0 <_stack+0x11001f0>
+  20:	5f796d5c 	svcpl	0x00796d5c
+  24:	696c6365 	stmdbvs	ip!, {r0, r2, r5, r6, r8, r9, sp, lr}^
+  28:	5f657370 	svcpl	0x00657370
+  2c:	6a6f7270 	bvs	1bdc9f4 <_stack+0x1b5c9f4>
+  30:	5c746365 	ldclpl	3, cr6, [r4], #-404	; 0xfffffe6c
+  34:	00656562 	rsbeq	r6, r5, r2, ror #10
+  38:	20554e47 	subscs	r4, r5, r7, asr #28
+  3c:	32205341 	eorcc	r5, r0, #67108865	; 0x4000001
+  40:	0031322e 	eorseq	r3, r1, lr, lsr #4
+  44:	Address 0x00000044 is out of bounds.
+
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	10001101 	andne	r1, r0, r1, lsl #2
+   4:	12011106 	andne	r1, r1, #-2147483647	; 0x80000001
+   8:	1b080301 	blne	200c14 <_stack+0x180c14>
+   c:	13082508 	movwne	r2, #34056	; 0x8508
+  10:	00000005 	andeq	r0, r0, r5
+
+Disassembly of section .debug_line:
+
+00000000 <.debug_line>:
+   0:	00000045 	andeq	r0, r0, r5, asr #32
+   4:	001c0002 	andseq	r0, ip, r2
+   8:	01020000 	mrseq	r0, (UNDEF: 2)
+   c:	000d0efb 	strdeq	r0, [sp], -fp
+  10:	01010101 	tsteq	r1, r1, lsl #2
+  14:	01000000 	mrseq	r0, (UNDEF: 0)
+  18:	00010000 	andeq	r0, r1, r0
+  1c:	2e64656c 	cdpcs	5, 6, cr6, cr4, cr12, {3}
+  20:	00000073 	andeq	r0, r0, r3, ror r0
+  24:	05000000 	streq	r0, [r0]
+  28:	00100002 	andseq	r0, r0, r2
+  2c:	010d0340 	tsteq	sp, r0, asr #6
+  30:	2f2f2f31 	svccs	0x002f2f31
+  34:	2f2f322f 	svccs	0x002f322f
+  38:	2f30312f 	svccs	0x0030312f
+  3c:	2f2f2f31 	svccs	0x002f2f31
+  40:	302f3031 	eorcc	r3, pc, r1, lsr r0	; <UNPREDICTABLE>
+  44:	01000802 	tsteq	r0, r2, lsl #16
+  48:	Address 0x00000048 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <_stack-0x80000>:
+   0:	00001541 	andeq	r1, r0, r1, asr #10
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000000b 	andeq	r0, r0, fp
+  10:	01080106 	tsteq	r8, r6, lsl #2
+  14:	Address 0x00000014 is out of bounds.
+
