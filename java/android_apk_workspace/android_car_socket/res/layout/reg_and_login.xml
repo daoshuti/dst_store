@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="Deprecated" >
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="35dp"
+        android:text="账号"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/passwdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="85dp"
+        android:text="密码"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="75dp"
+        android:layout_y="20dp"
+        android:ems="10"
+        android:hint="请输入账户名"
+        tools:ignore="TextFields,HardcodedText" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/passwdEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="75dp"
+        android:layout_y="80dp"
+        android:ems="10"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="75dp"
+        android:layout_y="135dp"
+        android:onClick="secondActivityButton"
+        android:text="登录"
+        tools:ignore="HardcodedText" />
+    
+        <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="175dp"
+        android:layout_y="135dp"
+        android:onClick="secondActivityButton"
+        android:text="注册"
+        tools:ignore="HardcodedText" />
+
+</AbsoluteLayout>

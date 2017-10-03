@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="第三个页面" />
+
+    <Button
+        android:id="@+id/bt3_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv3"
+        android:layout_below="@+id/tv3"
+        android:onClick="bit3"
+        android:text="前往一个页面" />
+
+    <Button
+        android:id="@+id/bt3_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt3_1"
+        android:layout_below="@+id/bt3_1"
+        android:onClick="bit3"
+        android:text="前往二个页面" />
+
+    <Button
+        android:id="@+id/bt3_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt3_2"
+        android:layout_below="@+id/bt3_2"
+        android:onClick="bit3"
+        android:text="前往三个页面" />
+
+    <Button
+        android:id="@+id/bt3_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bt3_3"
+        android:layout_below="@+id/bt3_3"
+        android:onClick="bit3"
+        android:text="结束程序" />
+    
+</RelativeLayout>

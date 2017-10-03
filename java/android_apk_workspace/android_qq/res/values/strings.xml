@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">qq2017</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">welcome to qq2017!</string>
+	<string name="butten_key">My Butten</string>
+	<string name="secend">第二个页面</string>
+</resources>

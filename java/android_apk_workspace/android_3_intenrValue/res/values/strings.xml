@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">android_3_intenrValue</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="bt_name_k1">发送消息并切换界面</string>
+    <string name="back_key">发送并返回主页</string>
+
+</resources>
