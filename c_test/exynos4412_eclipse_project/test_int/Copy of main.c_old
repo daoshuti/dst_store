@@ -1,0 +1,206 @@
+/*
+ *@brief	This example describes how to use GPIO to drive LEDs
+ *@date:	02. June. 2014
+ *@author	liujh@farsight.com.cn
+ *@Contact 	Us: http://dev.hqyj.com
+ *Copyright(C) 2014, Farsight
+ */
+
+#include "exynos_4412.h"
+void liushuideng();
+void beep();
+void key_init();
+void timer4_init(int ms);
+/**********************************************************************
+ * @brief		mydelay_ms program body
+ * @param[in]	int (ms)
+ * @return 		None
+ **********************************************************************/
+void mydelay_ms(int ms) {
+	int i, j;
+	while (ms--) {
+		for (i = 0; i < 5; i++)
+			for (j = 0; j < 514; j++)
+				;
+	}
+}
+void mydelay_10us(int us) {
+	int i, j;
+	while (us--) {
+		for (i = 0; i < 5; i++)
+			for (j = 0; j < 5; j++)
+				;
+	}
+}
+
+void do_irq(void) {
+	int irq_number;
+	irq_number = CPU0.ICCIAR & 0x3ff;//读取中断号，通知 中断开始执行
+	printf("irq_number = %d\n", irq_number);
+	switch (irq_number) {
+	case 57:
+		// 设置timer中断 延时50ms
+		timer4_init(50);
+		//	printf("==============================key2\n");
+
+		EXT_INT41_PEND = (1 << 1); // 清除中断源
+		ICDICPR.ICDICPR1 = (1 << 25); //清除中断混合器ICD
+		break;
+	case 58:
+
+		mydelay_ms(50);
+		if (0 == (GPX1.DAT & (1 << 2))) { // 延时判断消抖
+			printf("------------------------------key3\n");
+		}
+
+		EXT_INT41_PEND = (1 << 2); // 清除中断源
+		ICDICPR.ICDICPR1 = (1 << 26); //清除中断混合器ICD
+		break;
+	case 73:
+		if (0 == (GPX1.DAT & (1 << 1))) { // 延时判断消抖
+			printf("------------------------------key2\n");
+		}
+
+		PWM.TINT_CSTAT = (PWM.TINT_CSTAT & 0X1F) | (1 << 9);
+		ICDICPR.ICDICPR2 = (1 << 9); //清除中断混合器ICD
+
+		break;
+	}
+	CPU0.ICCEOIR = (CPU0.ICCEOIR & ~0x3ff) | irq_number; //通知icc中断结束
+}
+
+void timer4_init(int ms) {
+	PWM.TCFG0 = (PWM.TCFG0 & (~(0XFF << 8))) | (99 << 8); //100 / (99 + 1) = 1Mhz
+	PWM.TCFG1 = (PWM.TCFG1 & (~(0XF << 16))) | (0B0000 << 16); // 1M / 1
+
+	PWM.TCNTB4 = 1000 * ms;
+	PWM.TCON = (PWM.TCON & (~(0Xf << 20))) | (0B110 << 20);// UPDATE = 1 ,AUTO_RELOAD = 1  START = 0
+	PWM.TCON = (PWM.TCON & (~(0Xf << 20))) | (0B001 << 20); //START = 1
+
+	PWM.TINT_CSTAT = (PWM.TINT_CSTAT & 0X1F) | (1 << 4);
+	//41  73  –  TIMER4
+	ICDISER.ICDISER2 |= (1 << 9); //使能73号中断 检测
+	ICDIPTR.ICDIPTR18 = (ICDIPTR.ICDIPTR18 & (~(0xff << 8)))
+			| (0b00000001 << 8); //将中断58 送到 cpu0
+
+	ICDDCR = 1; //设置 监控所有中断
+
+	CPU0.ICCICR = 1; //使能icc
+}
+
+int main(void) {
+
+	uart_init();
+
+	key_init();
+
+	liushuideng();
+	while (1)
+		;
+	return 0;
+}
+
+void beep() {
+	GPD0.CON = (GPD0.CON & (~(0xf << 0))) | (0x2 << 0);
+
+	PWM.TCFG0 = (PWM.TCFG0 & (~(0XFF << 0))) | (99 << 0); //100 / (99 + 1) = 1Mhz
+	PWM.TCFG1 = (PWM.TCFG1 & (~(0XF << 0))) | (0B0010 << 0); // 1M / 4 = 250K
+
+	PWM.TCNTB0 = 250 - 1; // 250K / 250 = 1K
+	PWM.TCMPB0 = 250 / 2;
+
+	PWM.TCON = (PWM.TCON & (~0XFF)) | (0B1010 << 0);// UPDATE = 1 ,AUTO_RELOAD = 1  START = 0
+
+	PWM.TCON = (PWM.TCON & (~0XFF)) | (0B1001 << 0);// UPDATE = 0 ,AUTO_RELOAD = 1  START = 1
+
+}
+
+void key_init() {
+	// --------------------------key2-------------------------
+	GPX1.CON |= (0xf << 4); //设置为外部中断模式
+	EXT_INT41_CON = (EXT_INT41_CON & (~(0XF << 4))) | (0X2 << 4);//设置 下降沿信号触发中断
+
+	EXT_INT41_FLTCON0 |= 1 << 15;
+	EXT_INT41_FLTCON0 &= ~(1 << 14); //开启并选择不精准延时滤波
+
+	EXT_INT41_MASK &= ~(1 << 1);//使能中断传递到 GIC
+
+	//25  57  –  EINT[9]
+
+	ICDISER.ICDISER1 |= (1 << 25); //使能57号中断 检测
+	ICDIPTR.ICDIPTR14 = (ICDIPTR.ICDIPTR14 & (~(0xff << 8)))
+			| (0b00000001 << 8); //将中断57 送到 cpu0
+
+	ICDDCR = 1; //设置 监控所有中断
+
+	CPU0.ICCICR = 1; //使能icc
+
+
+	//---------------------key3------------------------------------
+
+	GPX1.CON |= (0xf << 8); //设置为外部中断模式
+	EXT_INT41_CON = (EXT_INT41_CON & (~(0XF << 8))) | (0X2 << 8);//设置 下降沿信号触发中断
+
+	EXT_INT41_FLTCON0 |= 1 << 23;
+	EXT_INT41_FLTCON0 &= ~(1 << 22); //开启并选择不精准延时滤波
+
+	EXT_INT41_MASK &= ~(1 << 2);//使能中断传递到 GIC
+
+	//26  58  –  EINT[10]
+
+	ICDISER.ICDISER1 |= (1 << 26); //使能58号中断 检测
+	ICDIPTR.ICDIPTR14 = (ICDIPTR.ICDIPTR14 & (~(0xff << 16))) | (0b00000001
+			<< 16); //将中断58 送到 cpu0
+
+	ICDDCR = 1; //设置 监控所有中断
+
+	CPU0.ICCICR = 1; //使能icc
+
+
+}
+
+void liushuideng() {
+	int i;
+
+	//led5
+	GPF3.CON = (GPF3.CON & (~(0xf << 20))) | (0x1 << 20);
+	GPF3.DAT |= (1 << 5);
+	//lde4
+	GPF3.CON = (GPF3.CON & (~(0xf << 16))) | (0x1 << 16);
+	GPF3.DAT |= (1 << 4);
+	//lde3
+	GPX1.CON = (GPX1.CON & (~(0xf << 0))) | (0x1 << 0);
+	GPX1.DAT |= (1 << 0);
+	//LDE2
+	GPX2.CON = (GPX2.CON & (~(0XF << 28))) | (0X1 << 28);
+	GPX2.DAT &= ~(1 << 7);
+
+	i = 2;
+	while (1) {
+		GPF3.DAT &= ~(1 << 5);
+		GPF3.DAT &= ~(1 << 4);
+		GPX1.DAT &= ~(1 << 0);
+		GPX2.DAT &= ~(1 << 7);
+
+		switch (i) {
+		case 2:
+			GPX2.DAT |= (1 << 7);
+			break;
+		case 3:
+			GPX1.DAT |= (1 << 0);
+			break;
+		case 4:
+			GPF3.DAT |= (1 << 4);
+			break;
+		case 5:
+			GPF3.DAT |= (1 << 5);
+			break;
+		default:
+			;
+		}
+		i++;
+		if (i > 5)
+			i = 2;
+		mydelay_ms(500);
+	}
+}

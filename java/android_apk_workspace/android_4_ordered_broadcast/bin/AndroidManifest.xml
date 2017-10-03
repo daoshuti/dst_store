@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.android_4_broadcast"
+    android:versionCode="1"
+    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="10"
+        tools:ignore="OldTargetApi"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.android_4_broadcast.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <receiver android:name="com.example.android_4_broadcast.MyBroadcastReceiver" 
+            tools:ignore="ExportedReceiver">
+            <intent-filter android:priority="-1000">
+                <action android:name="abc"/>
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name="com.example.android_4_broadcast.MyBroadcastReceiver2" 
+            tools:ignore="ExportedReceiver">
+            <intent-filter android:priority="0">
+                <action android:name="abc"/>
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name="com.example.android_4_broadcast.MyBroadcastReceiver3" 
+            tools:ignore="ExportedReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="abc"/>
+            </intent-filter>
+        </receiver>
+        
+    </application>
+
+</manifest>

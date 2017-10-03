@@ -1,0 +1,54 @@
+网络模型:
+
+OSI:应用层 表示层 会话层 传输层 网络层 链路层 物理层
+TCP/IP:应用层 传输层 网络层 网络接口和物理层 
+
+数据帧:
+
+ip
+
+端口号:
+字节序:htons ntohl
+
+int_addr();
+inet_ntoa();
+
+socket();
+bind();
+n = recvfrom(套接字，buf，buf空间大小,0,对方的地址结构,&len);
+sendto();
+
+客户端模型:
+1、创建套接字
+2、填充服务器的地址结构
+3、sendto();
+
+服务器模型:
+1、创建套接字
+2、填充服务器的地址结构
+3、绑定
+4、接收消息
+
+TCP函数接口:
+sockfd = socket(AF_INET,SOCK_STREAM,0)；  sockfd在TCP中是用于建立连接的 
+bind(); 
+listen(); 用于服务器
+connect(); 用于客户端
+accept(sockfd，);这个函数的返回值是一个文件描述符，用于收发数据。
+recv 
+send 
+
+TCP服务器模型  
+1、创建套接字socket()
+2、填充服务器的地址结构
+3、绑定 bind();
+4、监听listen();
+5、执行accept函数，接收客户端的连接请求,如果没有客户端请求连接，accept会阻塞
+6、收数据recv();
+
+TCP客户端模型
+1、创建套接字
+2、填充服务器的地址结构
+3、使用connect函数请求连接
+4、发送数据 send();
+
