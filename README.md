@@ -3,12 +3,20 @@
 
 ## 1.c
 	关于c语言语法的一些小程序，放在c_test目录下。
+### 1.1 crc
+    关于CRC校验的小程序
+### 1.2 exynos4412_eclipse_project
+    关于ARM裸机编程的代码
 
 ## 2.c++
 	关于c++语法的一些小程序，放在cpp_test目录下。
+### 2.1 cpp_codeblocks_projects
+    使用codeblock的相关程序
 
 ## 3.java
 	关于java语法的一些小程序，放在java目录下。
+### 3.1 android_apk_workspace
+    关于android的apk的小程序
 
 ## 4.python
 	关于python语法的一些小程序，放在python目录下。
@@ -51,3 +59,11 @@
 	
 	将来会增加zsh目录。
 
+## 9.datastruct
+    关于数据结构的小程序
+
+## 10.io
+    关于IO的程序
+
+## 11.internet
+    关于网络的程序
