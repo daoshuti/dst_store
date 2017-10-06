@@ -2,6 +2,9 @@
 
 ## windows
 
+### system
+* Regclean
+
 ### 浏览器
 * Chrome
 * Firefox
@@ -19,6 +22,9 @@
     * hex插件
 * sublime text3
 * source insight
+
+### font
+* FontCreator
 
 ### IDE
 * QT Creater
@@ -65,7 +71,7 @@
 ### 笔记
 * 有道笔记
     * markdown
-* 为知笔记
+* Xmind
 
 ### Commands
 * ConEmuPack 
@@ -80,6 +86,9 @@
 * 7z
 * tar
 * zip/unzip
+
+### Android
+* Vysor
 
 ## Linux
 
