@@ -1,13 +1,13 @@
 #!/usr/bin/env python  
-#coding=gb2312  
+#coding=gbk  
  
-#æ­¤æ¨¡å—ä¸»è¦æä¾›æŠ“å›¾åŠŸèƒ½ï¼Œæ”¯æŒä»¥ä¸‹ä¸‰ç§æŠ“å›¾æ–¹å¼ï¼š  
-#1ã€æŠ“å–å…¨å±,å¿«æ·é”®CTRL+F1  
-#2ã€æŠ“å–å½“å‰çª—å£ï¼Œå¿«æ·é”®CTRL+F2  
-#3ã€æŠ“å–æ‰€é€‰åŒºåŸŸï¼Œå¿«æ·é”®CTRL+F3  
-#æŠ“åˆ°ä¹‹åï¼Œä¼šè‡ªåŠ¨å¼¹å‡ºä¿å­˜å¯¹è¯æ¡†ï¼Œé€‰æ‹©è·¯å¾„ä¿å­˜å³å¯  
+#´ËÄ£¿éÖ÷ÒªÌá¹©×¥Í¼¹¦ÄÜ£¬Ö§³ÖÒÔÏÂÈıÖÖ×¥Í¼·½Ê½£º  
+#1¡¢×¥È¡È«ÆÁ,¿ì½İ¼üCTRL+F1  
+#2¡¢×¥È¡µ±Ç°´°¿Ú£¬¿ì½İ¼üCTRL+F2  
+#3¡¢×¥È¡ËùÑ¡ÇøÓò£¬¿ì½İ¼üCTRL+F3  
+#×¥µ½Ö®ºó£¬»á×Ô¶¯µ¯³ö±£´æ¶Ô»°¿ò£¬Ñ¡ÔñÂ·¾¶±£´æ¼´¿É  
 #*******************************************  
-#æ›´æ–°è®°å½•  
+#¸üĞÂ¼ÇÂ¼  
 #0.1 2012-03-10 create by dyx1024  
 #********************************************  
 
@@ -23,29 +23,29 @@ import ctypes.wintypes
 
 def capture_fullscreen(): 
     '''
-    Function:å…¨å±æŠ“å›¾
-    Inputï¼šNONE
+    Function:È«ÆÁ×¥Í¼
+    Input£ºNONE
     Output: NONE
     author: socrates
     blog:http://blog.csdn.net/dyx1024
     date:2012-03-10
     '''
-    #æŠ“å›¾
+    #×¥Í¼
     pic = ImageGrab.grab()
 
-    #ä¿å­˜å›¾ç‰‡
+    #±£´æÍ¼Æ¬
     save_pic(pic)
      
 def capture_current_windows(): 
     '''''
-    Function:æŠ“å–å½“å‰çª—å£
-    Inputï¼šNONE
+    Function:×¥È¡µ±Ç°´°¿Ú
+    Input£ºNONE
     Output: NONE
     author: socrates
     blog:http://blog.csdn.net/dyx1024
     date:2012-03-10
     '''  
-    #çª—å£ç»“æ„         
+    #´°¿Ú½á¹¹         
     class RECT(ctypes.Structure): 
         _fields_ = [('left', ctypes.c_long), 
                 ('top', ctypes.c_long), 
@@ -56,52 +56,52 @@ def capture_current_windows():
      
     rect = RECT() 
      
-    #è·å–å½“å‰çª—å£å¥æŸ„  
+    #»ñÈ¡µ±Ç°´°¿Ú¾ä±ú  
     HWND = win32gui.GetForegroundWindow() 
      
-    #å–å½“å‰çª—å£åæ ‡  
+    #È¡µ±Ç°´°¿Ú×ø±ê  
     ctypes.windll.user32.GetWindowRect(HWND,ctypes.byref(rect)) 
  
-    #è°ƒæ•´åæ ‡  
+    #µ÷Õû×ø±ê  
     rangle = (rect.left+2,rect.top+2,rect.right-2,rect.bottom-2) 
      
-    #æŠ“å›¾  
+    #×¥Í¼  
     pic = ImageGrab.grab(rangle) 
      
-    #ä¿å­˜  
+    #±£´æ  
     save_pic(pic) 
      
 def capture_choose_windows(): 
     '''''
-    Function:æŠ“å–é€‰æ‹©çš„åŒºåŸŸï¼Œæ²¡æœ‰è‡ªå·±å†™è¿™ä¸ªï¼Œå€Ÿç”¨QQæŠ“å›¾åŠŸèƒ½
-    Inputï¼šNONE
+    Function:×¥È¡Ñ¡ÔñµÄÇøÓò£¬Ã»ÓĞ×Ô¼ºĞ´Õâ¸ö£¬½èÓÃQQ×¥Í¼¹¦ÄÜ
+    Input£ºNONE
     Output: NONE
     author: socrates
     blog:http://blog.csdn.net/dyx1024
     date:2012-03-10
     '''      
     try: 
-         #åŠ è½½QQæŠ“å›¾ä½¿ç”¨çš„dll  
+         #¼ÓÔØQQ×¥Í¼Ê¹ÓÃµÄdll  
          dll_handle = ctypes.cdll.LoadLibrary('CameraDll.dll')  
     except Exception: 
              try: 
-                 #å¦‚æœdllåŠ è½½å¤±è´¥ï¼Œåˆ™æ¢ç§æ–¹æ³•ä½¿ç”¨ï¼Œç›´æ¥è¿è¡Œï¼Œå¦‚æœè¿˜å¤±è´¥ï¼Œé€€å‡º  
+                 #Èç¹ûdll¼ÓÔØÊ§°Ü£¬Ôò»»ÖÖ·½·¨Ê¹ÓÃ£¬Ö±½ÓÔËĞĞ£¬Èç¹û»¹Ê§°Ü£¬ÍË³ö  
                  os.system("Rundll32.exe CameraDll.dll, CameraSubArea") 
              except Exception: 
                  return     
     else: 
          try: 
-             #åŠ è½½dllæˆåŠŸï¼Œåˆ™è°ƒç”¨æŠ“å›¾å‡½æ•°ï¼Œæ³¨:æ²¡æœ‰åˆ†ææ¸…æ¥šè¿™ä¸ªå‡½æ•°å¸¦çš„å‚æ•°ä¸ªæ•°  
-             #åŠç±»å‹ï¼Œæ‰€ä»¥æ­¤è¯­å¥æ‰§è¡Œåä¼šæŠ¥å‚æ•°ç¼ºå°‘4ä¸ªå­—èŠ‚ï¼Œä½†ä¸å½±å“æŠ“å›¾åŠŸèƒ½ï¼Œæ‰€  
-             #ä»¥ç›´æ¥å¿½ç•¥äº†äº›å¼‚å¸¸  
+             #¼ÓÔØdll³É¹¦£¬Ôòµ÷ÓÃ×¥Í¼º¯Êı£¬×¢:Ã»ÓĞ·ÖÎöÇå³şÕâ¸öº¯Êı´øµÄ²ÎÊı¸öÊı  
+             #¼°ÀàĞÍ£¬ËùÒÔ´ËÓï¾äÖ´ĞĞºó»á±¨²ÎÊıÈ±ÉÙ4¸ö×Ö½Ú£¬µ«²»Ó°Ïì×¥Í¼¹¦ÄÜ£¬Ëù  
+             #ÒÔÖ±½ÓºöÂÔÁËĞ©Òì³£  
              dll_handle.CameraSubArea(0) 
          except Exception: 
              return            
  
-def save_pic(pic, filename = 'æœªå‘½ä»¤å›¾ç‰‡.png'): 
+def save_pic(pic, filename = 'Î´ÃüÁîÍ¼Æ¬.png'): 
     '''''
-    Function:ä½¿ç”¨æ–‡ä»¶å¯¹æ¡†ï¼Œä¿å­˜å›¾ç‰‡
-    Inputï¼šNONE
+    Function:Ê¹ÓÃÎÄ¼ş¶Ô¿ò£¬±£´æÍ¼Æ¬
+    Input£ºNONE
     Output: NONE
     author: socrates
     blog:http://blog.csdn.net/dyx1024
@@ -122,27 +122,27 @@ def save_pic(pic, filename = 'æœªå‘½ä»¤å›¾ç‰‡.png'):
  
 def main(): 
     '''''
-    Function:ä¸»å‡½æ•°ï¼Œæ³¨å†Œå¿«æ·é”®
-    Inputï¼šNONE
+    Function:Ö÷º¯Êı£¬×¢²á¿ì½İ¼ü
+    Input£ºNONE
     Output: NONE
     author: socrates
     blog:http://blog.csdn.net/dyx1024
     date:2012-03-10
     '''          
      
-    #åˆ›å»ºhotkeyå¥æŸ„   
+    #´´½¨hotkey¾ä±ú   
     hot_handle = pyhk.pyhk() 
   
-    #æ³¨å†ŒæŠ“å–å…¨å±å¿«æ·é”®CTRL+F1  
+    #×¢²á×¥È¡È«ÆÁ¿ì½İ¼üCTRL+F1  
     hot_handle.addHotkey(['Ctrl', 'F1'], capture_fullscreen) 
      
-    #æ³¨å†ŒæŠ“å–å½“å‰çª—å£å¿«æ·é”®CTRL+F2  
+    #×¢²á×¥È¡µ±Ç°´°¿Ú¿ì½İ¼üCTRL+F2  
     hot_handle.addHotkey(['Ctrl', 'F2'], capture_current_windows) 
      
-    #æ³¨å†ŒæŠ“å–æ‰€é€‰åŒºåŸŸå¿«æ·é”®CTRL+F3  
+    #×¢²á×¥È¡ËùÑ¡ÇøÓò¿ì½İ¼üCTRL+F3  
     hot_handle.addHotkey(['Ctrl', 'F3'], capture_choose_windows) 
   
-    #å¼€å§‹è¿è¡Œ  
+    #¿ªÊ¼ÔËĞĞ  
     hot_handle.start() 
      
 if __name__ == "__main__": 

@@ -18,6 +18,7 @@
 *.so
 *.so.dbg
 *.mod.c
+*.pyc
 
 *.lst
 *.symtypes
