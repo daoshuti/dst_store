@@ -2,11 +2,13 @@
 # _*_ coding:GBK _*_
 # 
 
+import os
 import win32api
 import win32con
 import win32gui
 from ctypes import *
 import time
+
 VK_CODE = {
     'backspace':0x08,
     'tab':0x09,
@@ -191,9 +193,9 @@ def key_input(str=''):
 
 
 if __name__ == "__main__":
-    #mouse_click(1024,470)
-    #str = 'hello'
-    #key_input(str)
-    #x, y = get_mouse_point()
-    #print "%d,%d"%x,y
-    win32api.MessageBox(win32con.NULL, 'Hello Python!', '你好', win32con.MB_OK)
+    mouse_click(500,500)
+    str = 'hello'
+    key_input(str)
+    x, y = get_mouse_point()
+    print "mouse click(%d,%d)"%(x,y)
+    print "keyboard input 'hello'"
