@@ -8,7 +8,7 @@
 """
 from OpenGL.GL import glCallList, glClear, glClearColor, glColorMaterial, glCullFace, glDepthFunc, glDisable, glEnable,\
                       glFlush, glGetFloatv, glLightfv, glLoadIdentity, glMatrixMode, glMultMatrixf, glPopMatrix, \
-                      glPushMatrix, glTranslated, glViewport, \
+                      glPushMatrix, glTranslated, glViewport, glRotatef, \
                       GL_AMBIENT_AND_DIFFUSE, GL_BACK, GL_CULL_FACE, GL_COLOR_BUFFER_BIT, GL_COLOR_MATERIAL, \
                       GL_DEPTH_BUFFER_BIT, GL_DEPTH_TEST, GL_FRONT_AND_BACK, GL_LESS, GL_LIGHT0, GL_LIGHTING, \
                       GL_MODELVIEW, GL_MODELVIEW_MATRIX, GL_POSITION, GL_PROJECTION, GL_SPOT_DIRECTION
@@ -19,6 +19,16 @@ from OpenGL.GLUT import glutCreateWindow, glutDisplayFunc, glutGet, glutInit, gl
                         GLUT_SINGLE, GLUT_RGB, GLUT_WINDOW_HEIGHT, GLUT_WINDOW_WIDTH
 import numpy
 from numpy.linalg import norm, inv
+import random
+from OpenGL.GL import glBegin, glColor3f, glEnd, glEndList, glLineWidth, glNewList, glNormal3f, glVertex3f, \
+                      GL_COMPILE, GL_LINES, GL_QUADS
+from OpenGL.GLU import gluDeleteQuadric, gluNewQuadric, gluSphere
+
+import color 
+from scene import Scene
+from primitive import init_primitives, G_OBJ_PLANE
+from node import Sphere, Cube, SnowFigure
+
 
 class Viewer(object):
     def __init__(self):
@@ -31,6 +41,7 @@ class Viewer(object):
         self.init_scene()
         #初始化交互操作相关的代码
         self.init_interaction()
+        init_primitives()
 
     def init_interface(self):
         """ 初始化窗口并注册渲染函数 """
@@ -68,9 +79,37 @@ class Viewer(object):
         #设置清屏的颜色
         glClearColor(0.4, 0.4, 0.4, 0.0)
 
+    #初始化场景，之后实现
     def init_scene(self):
-        #初始化场景，之后实现
-        pass
+        #创建一个场景实例
+        self.scene = Scene()
+        #初始化场景内的对象
+        self.create_sample_scene()
+
+    def create_sample_scene(self):
+        """
+        #创建一个球体
+        sphere_node = Sphere()
+        #设置球体的颜色
+        sphere_node.color_index = 2
+        #将球体放进场景中，默认在正中央
+        self.scene.add_node(sphere_node)
+        """
+
+        cube_node = Cube()
+        cube_node.translate(0, 0, 0)
+        cube_node.scale(3)
+        cube_node.color_index = 1
+        self.scene.add_node(cube_node)
+
+        sphere_node = Sphere()
+        sphere_node.translate(-2, 0, 2)
+        sphere_node.color_index = 3
+        self.scene.add_node(sphere_node)
+
+        hierarchical_node = SnowFigure()
+        hierarchical_node.translate(-2, 0, -2)
+        self.scene.add_node(hierarchical_node)
 
     def init_interaction(self):
         #初始化交互操作相关的代码，之后实现
@@ -94,12 +133,14 @@ class Viewer(object):
         glMatrixMode(GL_MODELVIEW)
         glPushMatrix()
         glLoadIdentity()
-    
+
+        glRotatef(10,0,1,0);
         #渲染场景
-        #self.scene.render()
+        self.scene.render()
     
         #每次渲染后复位光照状态
         glDisable(GL_LIGHTING)
+        glCallList(G_OBJ_PLANE)
         glPopMatrix()
         #把数据刷新到显存上
         glFlush()
