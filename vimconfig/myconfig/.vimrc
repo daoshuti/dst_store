@@ -74,7 +74,7 @@ set tabstop=4       " 制表符为4
 set expandtab       " 制表符替换为空格
 "set noexpandtab       " noexpand tabs into spaces  将tab不扩展成空格
 set termencoding=utf-8
-set textwidth=80
+"set textwidth=80   " 超过80个字符自动换行
 set whichwrap=h,l
 set wildignore=*.bak,*.o,*.e,*~
 set wildmenu
