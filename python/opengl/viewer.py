@@ -80,9 +80,47 @@ class Viewer(object):
         #程序主循环开始
         glutMainLoop()
 
+    #程序进入主循环后每一次循环调用的渲染函数
     def render(self):
-        #程序进入主循环后每一次循环调用的渲染函数
-        pass
+        #初始化投影矩阵
+        self.init_view()
+    
+        #启动光照
+        glEnable(GL_LIGHTING)
+        #清空颜色缓存与深度缓存
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    
+        #设置模型视图矩阵，目前为止用单位矩阵就行了。
+        glMatrixMode(GL_MODELVIEW)
+        glPushMatrix()
+        glLoadIdentity()
+    
+        #渲染场景
+        #self.scene.render()
+    
+        #每次渲染后复位光照状态
+        glDisable(GL_LIGHTING)
+        glPopMatrix()
+        #把数据刷新到显存上
+        glFlush()
+    
+    def init_view(self):
+        """ 初始化投影矩阵 """
+        xSize, ySize = glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
+        #得到屏幕宽高比
+        aspect_ratio = float(xSize) / float(ySize)
+    
+        #设置投影矩阵
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+    
+        #设置视口，应与窗口重合
+        glViewport(0, 0, xSize, ySize)
+        #设置透视，摄像机上下视野幅度70度
+        #视野范围到距离摄像机1000个单位为止。
+        gluPerspective(70, aspect_ratio, 0.1, 1000.0)
+        #摄像机镜头从原点后退15个单位
+        glTranslated(0, 0, -15)
 
 if __name__ == "__main__":
     viewer = Viewer()
