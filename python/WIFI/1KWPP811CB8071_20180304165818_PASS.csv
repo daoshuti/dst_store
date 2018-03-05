@@ -1,0 +1,69 @@
+-------------------------------------------------------------
+ResultType:,TotalResult
+SerialNo,TestTime,Operator,Station,Fixture,TimeConsuming,Equipment,TestResult
+1KWPP811CB8071,2018-3-4 16:58:18,xnl,,0,53,CMW100:1201.0002k03,PASS
+
+
+----------------------------------------------------------
+ResultType:,NsFTResult
+SN: 1KWPP811CB8071
+Current Boot Mode is 1
+NSFT_BlueTooth_Test_Result
+Item count,TestItem,Bs Power,Test Freq,Unit,Value,StdValue,MinLimit,MaxLimit,,Result
+1, BLE Power Avg, -86.00, 2440.00, dbm, -3.23, 0.00, -5.00, 5.00, PASS
+2, BLE Freq Accuracy, -86.00, 2440.00, KHz, -1.71, 0.00, -75.00, 75.00, PASS
+3, BT RX RSSI, -86.00, 2440.00, , -92.00, -86.00, -96.00, -76.00, PASS
+4, BLE RX ber, -86.00, 2440.00, %, 0.00, 0.00, 0.00, 30.80, PASS
+Current Boot Mode is 1
+WIFI Chain0 Testing...
+NSFT_WIFI_11n_Result
+Item count,TestItem,Bs Power,Channel,Unit,Value,StdValue,MinLimit,MaxLimit,Result
+5, PowerAvg, -67.00,     1, dbm, 13.25, 16.00, 10.00, 20.00, PASS
+6, EVM, -67.00,     1, dB, -35.94, -38.00, -50.00, -27.00, PASS
+7, WLAN RX RSSI, -67.00,     1, , -68.00, -67.00, -77.00, -57.00, PASS
+8, WLAN RX per, -67.00,     1, %, 0.00, 0.00, 0.00, 10.00, PASS
+9, PowerAvg, -67.00,     7, dbm, 13.62, 16.00, 10.00, 20.00, PASS
+10, EVM, -67.00,     7, dB, -36.46, -38.00, -50.00, -27.00, PASS
+11, WLAN RX RSSI, -67.00,     7, , -69.00, -67.00, -77.00, -57.00, PASS
+12, WLAN RX per, -67.00,     7, %, 0.00, 0.00, 0.00, 10.00, PASS
+13, PowerAvg, -67.00,    13, dbm, 12.74, 16.00, 10.00, 20.00, PASS
+14, EVM, -67.00,    13, dB, -36.62, -38.00, -50.00, -27.00, PASS
+15, WLAN RX RSSI, -67.00,    13, , -69.00, -67.00, -77.00, -57.00, PASS
+16, WLAN RX per, -67.00,    13, %, 0.00, 0.00, 0.00, 10.00, PASS
+17, PowerAvg, -68.00,    36, dbm, 17.02, 15.00, 10.00, 20.00, PASS
+18, EVM, -68.00,    36, dB, -34.75, -38.00, -50.00, -27.00, PASS
+19, WLAN RX RSSI, -68.00,    36, , -69.00, -68.00, -78.00, -58.00, PASS
+20, WLAN RX per, -68.00,    36, %, 0.00, 0.00, 0.00, 10.00, PASS
+21, PowerAvg, -68.00,   165, dbm, 15.80, 13.00, 8.00, 18.00, PASS
+22, EVM, -68.00,   165, dB, -38.52, -38.00, -50.00, -27.00, PASS
+23, WLAN RX RSSI, -68.00,   165, , -66.00, -68.00, -78.00, -58.00, PASS
+24, WLAN RX per, -68.00,   165, %, 0.00, 0.00, 0.00, 10.00, PASS
+WIFI Chain1 Testing...
+NSFT_WIFI_11n_Result
+Item count,TestItem,Bs Power,Channel,Unit,Value,StdValue,MinLimit,MaxLimit,Result
+25, PowerAvg, -67.00,     1, dbm, 15.61, 16.00, 10.00, 20.00, PASS
+26, EVM, -67.00,     1, dB, -35.06, -38.00, -50.00, -27.00, PASS
+27, WLAN RX RSSI, -67.00,     1, , -67.00, -67.00, -77.00, -57.00, PASS
+28, WLAN RX per, -67.00,     1, %, 0.00, 0.00, 0.00, 10.00, PASS
+29, PowerAvg, -67.00,     7, dbm, 15.81, 16.00, 10.00, 20.00, PASS
+30, EVM, -67.00,     7, dB, -36.12, -38.00, -50.00, -27.00, PASS
+31, WLAN RX RSSI, -67.00,     7, , -68.00, -67.00, -77.00, -57.00, PASS
+32, WLAN RX per, -67.00,     7, %, 0.00, 0.00, 0.00, 10.00, PASS
+33, PowerAvg, -67.00,    13, dbm, 15.48, 16.00, 10.00, 20.00, PASS
+34, EVM, -67.00,    13, dB, -34.22, -38.00, -50.00, -27.00, PASS
+35, WLAN RX RSSI, -67.00,    13, , -67.00, -67.00, -77.00, -57.00, PASS
+36, WLAN RX per, -67.00,    13, %, 0.00, 0.00, 0.00, 10.00, PASS
+37, PowerAvg, -68.00,    36, dbm, 17.71, 15.00, 10.00, 20.00, PASS
+38, EVM, -68.00,    36, dB, -34.32, -38.00, -50.00, -27.00, PASS
+39, WLAN RX RSSI, -68.00,    36, , -65.00, -68.00, -78.00, -58.00, PASS
+40, WLAN RX per, -68.00,    36, %, 0.00, 0.00, 0.00, 10.00, PASS
+41, PowerAvg, -68.00,   165, dbm, 13.91, 13.00, 8.00, 18.00, PASS
+42, EVM, -68.00,   165, dB, -37.79, -38.00, -50.00, -27.00, PASS
+43, WLAN RX RSSI, -68.00,   165, , -67.00, -68.00, -78.00, -58.00, PASS
+44, WLAN RX per, -68.00,   165, %, 0.00, 0.00, 0.00, 10.00, PASS
+Read TestInfo success!
+Write TestInfo success!
+Set Online Mode Success!
+DUT Is reset now...
+
+
