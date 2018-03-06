@@ -1,7 +1,6 @@
 @echo off
 
 set LOG_DIR_NAME=LC_LOG
-set /p TSN_NUM=Please input TSN:
 for /f "delims=" %%i in ( 'adb shell cat persist/SYSTEM_SN') do set MYAPSN=%%i
 
 rem settings
@@ -31,8 +30,8 @@ if not exist %LOG_PATH%\runin (
 	mkdir %LOG_PATH%\runin
 	adb pull /data/data/com.longcheertel.runintest/RuninTestII %LOG_PATH%\runin
 	adb pull /data/data/com.longcheertel.runintest/shared_prefs/com.longcheertel.runintest_preferences.xml %LOG_PATH%\runin
-
 )
+
 if not exist %LOG_PATH%\sdcard (
 	mkdir %LOG_PATH%\sdcard
 	adb pull /sdcard/log %LOG_PATH%\sdcard
@@ -70,19 +69,24 @@ echo Save device information...
 echo ---------------------------------------------->%LOG_PATH%/device_info.txt
 echo               PRODUCT INFORMATION             >>%LOG_PATH%/device_info.txt
 echo ---------------------------------------------->>%LOG_PATH%/device_info.txt
+
 echo [Current Time] >> %LOG_PATH%/device_info.txt
 adb shell date >> %LOG_PATH%/device_info.txt
+echo. >>%LOG_PATH%/device_info.txt
 echo [Up Time] >> %LOG_PATH%/device_info.txt
 adb shell uptime >> %LOG_PATH%/device_info.txt
+echo. >>%LOG_PATH%/device_info.txt
 echo [LC Version]>> %LOG_PATH%/device_info.txt 
 adb shell getprop ro.build.version.internal >> %LOG_PATH%/device_info.txt
+echo. >>%LOG_PATH%/device_info.txt
 echo [SN]>> %LOG_PATH%/device_info.txt 
 adb shell getprop sys.nv.serialno >> %LOG_PATH%/device_info.txt
+echo. >>%LOG_PATH%/device_info.txt
 echo [APSN]>> %LOG_PATH%/device_info.txt 
 adb shell cat persist/SYSTEM_SN >> %LOG_PATH%/device_info.txt
 echo. >>%LOG_PATH%/device_info.txt
-echo [TSN]>>%LOG_PATH%/device_info.txt 
-echo %TSN_NUM%>>%LOG_PATH%/device_info.txt 
+echo. >>%LOG_PATH%/device_info.txt
+
 echo ---------------------------------------------->>%LOG_PATH%/device_info.txt
 echo               DEVICES INFORMATION             >>%LOG_PATH%/device_info.txt
 echo ---------------------------------------------->>%LOG_PATH%/device_info.txt
