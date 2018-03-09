@@ -29,22 +29,18 @@ int main(int argc, const char *argv[])
 	struct sockaddr_in cliaddr;
 	char buf[128];
 	int clilen = sizeof(cliaddr);
-	
 	int recvlen;
 
 	while(1)
 	{
 		memset(buf,0,sizeof(buf));
 		recvlen = recvfrom(sockfd,buf,sizeof(buf),0,(struct sockaddr *)&cliaddr,&clilen);
-
 		if(recvlen == -1)
 		{
 			perror("recvfrom");
 			return -1;
 		}
-
 		printf("buf:%s,ip:%s\n",buf,inet_ntoa(cliaddr.sin_addr));
-
 	}
 	return 0;
 }
