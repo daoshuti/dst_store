@@ -13,27 +13,29 @@ namespace TestRead
             string shareName = Console.ReadLine();
             if (string.IsNullOrEmpty(shareName))
                 shareName = "testmap";
-            //using (MemoryMappedFile mmf = MemoryMappedFile.CreateOrOpen(shareName, 1024,MemoryMappedFileAccess.ReadWrite))
-            using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(shareName))
+            using (MemoryMappedFile mmf = MemoryMappedFile.CreateOrOpen(shareName, 1024,MemoryMappedFileAccess.ReadWrite))
+            //using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting(shareName))
             {
                 //进程间同步
-                Mutex mutex = Mutex.OpenExisting("testmapmutex");
+                //Mutex mutex = Mutex.OpenExisting("testmapmutex");
+                Mutex mutex = new Mutex(false, "testmapmutex");
                 while(true)
                 {
-                    Console.WriteLine("按【回车】读取共享内存数据：");
-                    Console.ReadLine();
+                    char[] buffer = new char[1024];
+                    //Console.WriteLine("按【回车】读取共享内存数据：");
+                    //Console.ReadLine();
                     //Thread.Sleep(1000);
-                    //mutex.WaitOne();
+                    mutex.WaitOne();
                     using (MemoryMappedViewStream stream = mmf.CreateViewStream())
                     {
                         var reader = new BinaryReader(stream);
-                        char[] buffer = new char[1024];
+                        
                         reader.Read(buffer, 0, 1024);
-                        Console.WriteLine(buffer);
                         //Console.Write(buffer);
                         //Console.WriteLine("stream lenght : " + mmf.CreateViewStream().Length.ToString());
                     }
-                    //mutex.ReleaseMutex();
+                    mutex.ReleaseMutex();
+                    Console.WriteLine(buffer);
                 }
             }
             //Console.ReadKey();

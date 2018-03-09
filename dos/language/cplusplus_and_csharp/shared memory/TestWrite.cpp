@@ -41,10 +41,10 @@ int main()
     // 定义进程锁
     HANDLE mutex;
 	char mutexname[] = "testmapmutex";
-    mutex = OpenMutex(MUTEX_ALL_ACCESS,TRUE,mutexname);
+    mutex = OpenMutex(MUTEX_ALL_ACCESS,FALSE,mutexname);
     if(mutex == NULL)  
     {
-        mutex = CreateMutex(NULL,TRUE,mutexname);  
+        mutex = CreateMutex(NULL,FALSE,mutexname);  
     }
     
     while(1)  
