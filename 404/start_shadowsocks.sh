@@ -11,7 +11,7 @@ echo Save log in ${LOG_PATH}.
 if [ -f ${BASE_PATH}/shadowsocks.json ]; then
     nohup sslocal -c ${BASE_PATH}/shadowsocks.json > ${LOG_PATH} 2>&1 &
     #sslocal -c ${BASE_PATH}/shadowsocks.json
-    if [ $? ]; then
+    if [ $? != 0 ]; then
         echo Failure to the sslocal execute!!!
         exit 1
     fi
@@ -21,7 +21,7 @@ else
 fi
 echo Start polipo ...
 sudo service polipo restart
-if [ $? ]; then
+if [ $? != 0 ]; then
     echo Failure to the polipo execute!!!
     exit 1
 export http_proxy="http://127.0.0.1:8123"
