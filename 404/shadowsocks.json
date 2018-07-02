@@ -1,0 +1,10 @@
+{
+    "server": "47.75.189.2",
+    "server_port": 443,
+    "method": "aes-256-cfb",
+    "password": "wanghanzhenshuai",
+    "local_address":"127.0.0.1",
+    "local_port": 1080,
+    "timeout": 600,
+    "fast_open": false
+}
