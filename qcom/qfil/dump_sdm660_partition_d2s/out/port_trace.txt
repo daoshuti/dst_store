@@ -1,0 +1,206 @@
+
+16:37:12: INFO: FH_LOADER WAS CALLED EXACTLY LIKE THIS
+************************************************
+./fh_loader --memoryname=emmc --sendxml=rawprogram0.xml --convertprogram2read --port=/dev/ttyUSB0 --mainoutputdir=out 
+************************************************
+
+16:37:12: DEBUG: Binary build date: Apr  8 2018 @ 19:59:43
+
+16:37:12: DEBUG: Build Version: 18.04. 8.19.59.43
+
+16:37:12: INFO: Current working dir (cwd): /home/wh/Desktop/dump_sdm660_partition/
+16:37:12: INFO: Showing network mappings to allow debugging
+16:37:12: INFO: 
+
+
+
+16:37:12: INFO: Trying to store 'rawprogram0.xml' in string table
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'rawprogram0.xml'
+16:37:12: DEBUG: 2. Calling stat(rawprogram0.xml')
+16:37:12: DEBUG: 2. Calling fopen('/home/wh/Desktop/dump_sdm660_partition/rawprogram0.xml') with AccessMode='rb'
+16:37:12: DEBUG: Trying get filesize, calling fseek()
+16:37:12: DEBUG: Found 'rawprogram0.xml' (19103 bytes) in local directory '/home/wh/Desktop/dump_sdm660_partition/
+16:37:12: DEBUG: 2. Calling fopen('/home/wh/Desktop/dump_sdm660_partition/rawprogram0.xml') with AccessMode='r'
+16:37:12: DEBUG: Trying get filesize, calling fseek()
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'persist.img'
+16:37:12: DEBUG: 2. Calling stat(persist.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'persist.img', returning NULL
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'persist.img'
+16:37:12: DEBUG: 2. Calling stat(persist.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'persist.img', returning NULL
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'cache.img'
+16:37:12: DEBUG: 2. Calling stat(cache.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'cache.img', returning NULL
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'system.img'
+16:37:12: DEBUG: 2. Calling stat(system.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'system.img', returning NULL
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'vendor.img'
+16:37:12: DEBUG: 2. Calling stat(vendor.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'vendor.img', returning NULL
+16:37:12: DEBUG: ==================================================================================
+16:37:12: DEBUG: ==================================================================================
+16:37:12: INFO: Looking for file 'userdata.img'
+16:37:12: DEBUG: 2. Calling stat(userdata.img')
+
+
+	                         (_)            
+	__      ____ _ _ __ _ __  _ _ __   __ _ 
+	\ \ /\ / / _` | '__| '_ \| | '_ \ / _` |
+	 \ V  V / (_| | |  | | | | | | | | (_| |
+	  \_/\_/ \__,_|_|  |_| |_|_|_| |_|\__, |
+	                                   __/ |
+	                                  |___/ 
+
+
+16:37:12: WARNING: find_file:7631 Couldn't find the file 'userdata.img', returning NULL
+16:37:12: INFO: User wants to talk to port '/dev/ttyUSB0'
+16:37:12: DEBUG: port_fd=0x4
+
+16:37:12: INFO: Took       0.00034000 seconds to open port
+16:37:12: INFO: Sorting TAGS to ensure order is <configure>,<erase>, others, <patch>,<power>
+16:37:12: INFO: If  you don't want this, use --dontsorttags
+
+16:37:12: INFO: Sending <configure>
+16:37:12: DEBUG: CHANNEL DATA (P0000) (H00202) (    228 bytes) - HOST TO TARGET -->
+===========================================================================================================
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+<configure MemoryName="emmc" Verbose="0" AlwaysValidate="0" MaxDigestTableSizeInBytes="8192" MaxPayloadSizeToTargetInBytes="1048576" ZlpAwareHost="0" SkipStorageInit="0" />
+</data>
+
+============================================================================================================
+
+16:37:12: DEBUG: CharsInBuffer=0 Trying to read from USB 8192 bytes
+
+
+	 _____                    
+	|  ___|                   
+	| |__ _ __ _ __ ___  _ __ 
+	|  __| '__| '__/ _ \| '__|
+	| |__| |  | | | (_) | |   
+	\____/_|  |_|  \___/|_|  
+
+
+16:37:17: {ERROR: ReadPort:5128 Timeout - no response trying to read from target
+
+
+16:37:17: DEBUG: CharsInBuffer = 0
+16:37:17: INFO: Didn't get any data from USB, sleeping for 1ms and trying again NumTries=1 of 10
+16:37:18: INFO: Back from sleep
+16:37:18: DEBUG: CharsInBuffer=0 Trying to read from USB 8192 bytes
+
+
+	 _____                    
+	|  ___|                   
+	| |__ _ __ _ __ ___  _ __ 
+	|  __| '__| '__/ _ \| '__|
+	| |__| |  | | | (_) | |   
+	\____/_|  |_|  \___/|_|  
+
+
+16:37:23: {ERROR: ReadPort:5128 Timeout - no response trying to read from target
+
+
+16:37:23: DEBUG: CharsInBuffer = 0
+16:37:23: INFO: Didn't get any data from USB, sleeping for 1ms and trying again NumTries=2 of 10
+16:37:24: INFO: Back from sleep
+16:37:24: DEBUG: CharsInBuffer=0 Trying to read from USB 8192 bytes
+
+
+	 _____                    
+	|  ___|                   
+	| |__ _ __ _ __ ___  _ __ 
+	|  __| '__| '__/ _ \| '__|
+	| |__| |  | | | (_) | |   
+	\____/_|  |_|  \___/|_|  
+
+
+16:37:29: {ERROR: ReadPort:5128 Timeout - no response trying to read from target
+
+
+16:37:29: DEBUG: CharsInBuffer = 0
+16:37:29: INFO: Didn't get any data from USB, sleeping for 1ms and trying again NumTries=3 of 10
+16:37:30: INFO: Back from sleep
+16:37:30: DEBUG: CharsInBuffer=0 Trying to read from USB 8192 bytes
+
+
+	 _____                    
+	|  ___|                   
+	| |__ _ __ _ __ ___  _ __ 
+	|  __| '__| '__/ _ \| '__|
+	| |__| |  | | | (_) | |   
+	\____/_|  |_|  \___/|_|  
+
+
+16:37:35: {ERROR: ReadPort:5128 Timeout - no response trying to read from target
+
+
+16:37:35: DEBUG: CharsInBuffer = 0
+16:37:35: INFO: Didn't get any data from USB, sleeping for 1ms and trying again 
