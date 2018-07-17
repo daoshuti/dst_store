@@ -1,0 +1,149 @@
+1	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078833
+2	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078815
+3	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078522
+4	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078495
+5	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078396
+6	
+7	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078107
+8	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3078008
+9	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077947
+10	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077842
+11	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077825
+12	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077782
+13	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077751
+14	
+15	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077575
+16	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077561
+17	
+18	
+19	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077453
+20	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077297
+21	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077257
+22	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077131
+23	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077124
+24	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3077102
+25	
+26	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076950
+27	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076922
+28	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076846
+29	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076840
+30	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076697
+31	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076689
+32	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076667
+33	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076691
+34	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076594
+35	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076489
+36	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076454
+37	
+38	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076427
+39	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076424
+40	
+41	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076339
+42	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076261
+43	
+44	
+45	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076026
+46	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3075873
+47	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3075762
+48	
+49	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3075287
+50	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3075229
+51	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074916
+52	
+53	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074766
+54	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074671
+55	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3076596
+56	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074579
+57	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074329
+58	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074171
+59	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3074141
+60	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073894
+61	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073889
+62	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073828
+63	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073809
+64	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073675
+65	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073677
+66	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073549
+67	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073532
+68	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073483
+69	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073479
+70	
+71	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073342
+72	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073286
+73	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073257
+74	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073083
+75	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073074
+76	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3073121
+77	
+78	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072899
+79	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072910
+80	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072451
+81	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072417
+82	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072249
+83	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072237
+84	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3072119
+85	
+86	
+87	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071715
+88	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071842
+89	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071568
+90	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071775
+91	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071387
+92	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071365
+93	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071346
+94	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071310
+95	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071272
+96	
+97	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3071192
+98	
+99	
+100	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3070904
+101	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3070626
+102	
+103	
+104	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3070160
+105	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069889
+106	
+107	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069806
+108	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069686
+109	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069502
+110	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069163
+111	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069152
+112	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069160
+113	
+114	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3069049
+115	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068997
+116	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068940
+117	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068813
+118	
+119	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068477
+120	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068433
+121	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068237
+122	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3068061
+123	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067943
+124	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067902
+125	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067892
+126	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067789
+127	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067772
+128	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067676
+129	
+130	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067369
+131	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067363
+132	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3067360
+133	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3066834
+134	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3066709
+135	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3066420
+136	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3066023
+137	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3065749
+138	
+139	
+140	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3065184
+141	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3064940
+142	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3064936
+143	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3064574
+144	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3064483
+145	
+146	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3063887
+147	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3063698
+148	http://en.pt.intl.miui.com/misc/data/feedback/download?tid[]=3063678
+149	
