@@ -26,7 +26,7 @@ def parse(list_file):
 if __name__ == '__main__':
     download_list = parse(LIST_PATH)
     #print(download_list)
-    os.system('mkdir download')
+    os.system('mkdir ' + DOWNLOAD_PATH)
     for loger in download_list:
         if loger[1] == '\r\n':
             print(loger[0] + ',Don\'t have log.')
