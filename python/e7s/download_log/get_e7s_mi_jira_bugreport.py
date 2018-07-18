@@ -12,7 +12,8 @@ import sys
 import urllib
 import re
 
-LIST_PATH = './list.txt'
+LIST_PATH = 'list.txt'
+DOWNLOAD_PATH = 'download'
 
 # parse list.txt
 def parse(list_file):
@@ -25,14 +26,16 @@ def parse(list_file):
 if __name__ == '__main__':
     download_list = parse(LIST_PATH)
     #print(download_list)
-    os.system('mkdir ./download')
+    os.system('mkdir download')
     for loger in download_list:
         if loger[1] == '\r\n':
             print(loger[0] + ',Don\'t have log.')
         else:
-            os.system('mkdir -p ' + './download/' + loger[0])
-            print(loger[0] + ',Created log floder\'' + loger[0] + '\'')
-            urllib.urlretrieve(loger[1][:-2], './download/' + loger[0] + '/batchlog.zip', None)
-            print(loger[1][:-2] + ' , ' + './download/' + loger[0] + '/batchlog.zip')
+            local_cmdline = 'mkdir ' + os.path.join(DOWNLOAD_PATH,loger[0])
+            os.system(local_cmdline)
+            local_dl_path_str = os.path.join(os.path.join(DOWNLOAD_PATH,loger[0]),'batchlog.zip')
+            print(loger[0] + ',Created log : ' + local_dl_path_str)
+            print('[URL] ' + loger[1][:-2])
+            urllib.urlretrieve(loger[1][:-2], local_dl_path_str, None)
 
 
