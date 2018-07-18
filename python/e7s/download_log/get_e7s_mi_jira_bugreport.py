@@ -34,8 +34,9 @@ if __name__ == '__main__':
             local_cmdline = 'mkdir ' + os.path.join(DOWNLOAD_PATH,loger[0])
             os.system(local_cmdline)
             local_dl_path_str = os.path.join(os.path.join(DOWNLOAD_PATH,loger[0]),'batchlog.zip')
+            local_dl_url_str = loger[1]
             print(loger[0] + ',Created log : ' + local_dl_path_str)
-            print('[URL] ' + loger[1][:-2])
-            urllib.urlretrieve(loger[1][:-2], local_dl_path_str, None)
+            print('[URL] ' + local_dl_url_str)
+            urllib.urlretrieve(local_dl_url_str, local_dl_path_str, None)
 
 
