@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author: wanghan
 # Created Time : Thu 26 Jul 2018 07:37:30 PM CST
-# File Name: my_daliybuild.sh
+# File Name: my_dailybuild.sh
 # Description:
 
 ALARM_TIME="22:00:00"
@@ -9,7 +9,7 @@ TODAY_DATE=`date -d now +%Y%m%d`
 
 function myprint 
 {
-    MYLOG_TAG="my_daliybuild"
+    MYLOG_TAG="my_dailybuild"
     echo \[`date -d today +"%Y-%m-%d %H:%M:%S"`\] $MYLOG_TAG : $*
 }
 
