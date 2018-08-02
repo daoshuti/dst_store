@@ -1,0 +1,12 @@
+1	http://jira.n.xiaomi.com/secure/attachment/1080467/Battery%20Drain1.zip
+2	http://jira.n.xiaomi.com/secure/attachment/1080466/Battery%20Drain2.zip
+3	http://jira.n.xiaomi.com/secure/attachment/1080465/Battery%20drain3.zip
+4	http://jira.n.xiaomi.com/secure/attachment/1080464/Battery%20drain4.zip
+5	http://jira.n.xiaomi.com/secure/attachment/1080463/Battery%20drain5.zip
+6	http://jira.n.xiaomi.com/secure/attachment/1080462/Battery%20report_After.png
+7	http://jira.n.xiaomi.com/secure/attachment/1080461/Battery%20Report_Before.png
+8	http://jira.n.xiaomi.com/secure/attachment/1083929/bugreport-2018-07-16-114007.zip
+9	http://jira.n.xiaomi.com/secure/attachment/1094604/log%E5%88%86%E6%9E%90.xlsx
+10	http://jira.n.xiaomi.com/secure/attachment/1083781/Mrigank_Battery%20DRain.zip
+11	http://jira.n.xiaomi.com/secure/attachment/1094580/screenshot-1.png
+12	http://jira.n.xiaomi.com/secure/attachment/1094604/1094604_log%E5%88%86%E6%9E%90.xlsx
