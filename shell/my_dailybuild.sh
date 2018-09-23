@@ -4,13 +4,19 @@
 # File Name: my_dailybuild.sh
 # Description:
 
-ALARM_TIME="22:00:00"
+ALARM_TIME="05:00:00"
 TODAY_DATE=`date -d now +%Y%m%d`
 
 function myprint 
 {
     MYLOG_TAG="my_dailybuild"
-    echo \[`date -d today +"%Y-%m-%d %H:%M:%S"`\] $MYLOG_TAG : $*
+    if [ $1 == "-r" ] ; then
+        MYLOG="[`date -d today +"%Y-%m-%d %H:%M:%S"`] $MYLOG_TAG : $2"
+        echo -e "\r$MYLOG\c"
+    else
+        echo \[`date -d today +"%Y-%m-%d %H:%M:%S"`\] $MYLOG_TAG : $*
+    fi
+
 }
 
 function alarm_everyday 
@@ -46,8 +52,8 @@ function daliybuild_run
     ### Daliybuild commands start ###
     repo sync -c --no-tags -j4
     source build/envsetup.sh
-    lunch 55
-    make -j8
+    lunch lavender-userdebug
+    make -j16
     ### Daliybuild commands end ###
     if [[ $? -eq 0 ]] ; then
         return 0;
@@ -73,18 +79,17 @@ function main
                 myprint "Alarm OK. Start daliybuild ..."
                 daliybuild_run
                 if [[ $? -eq 0 ]] ; then
-                    myprint my build pass
+                    myprint "my build pass"
                     new_loop_flag=0
                 else
                     myprint "My build fail"
                     myprint "Try again"
                 fi
-            else
-                myprint "Waiting for alarm"
             fi
         fi
 
-        sleep 60
+        myprint "-r" "Waiting for alarm"
+        sleep 1
 
     done
 }
