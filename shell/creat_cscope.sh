@@ -10,7 +10,7 @@ CHID_NUM=0
 # 初始化
 init()
 {
-	echo "请输入源码所在目录："
+    echo "请输入源码所在目录(如 /home/wanghan/arm11 )："
 	read TARGET_DIR 
 	echo "TARGET_DIR = ${TARGET_DIR}"
 	if [ -d ${TARGET_DIR} ];then
@@ -21,7 +21,7 @@ init()
 		if [ ${CHID_NUM} -ne 0 ] ; then
 			for test_dir in ${CHID_DIR}
 			do
-				if ! [ -d ${test_dir} ];then
+				if ! [ -d "${test_dir}" ];then
 					echo "输入有误：${test_dir}不是目录文件!"
 					exit
 				fi
@@ -55,7 +55,7 @@ run()
 					\) > ${PWD}/${dir_name}.files
 		cscope -bkq -i ${dir_name}.files -f ${dir_name}.out
 		if [ ${CHID_NUM} == 0 ];then
-			echo "cs add ${PWD}/${dir_name}.out" >>load.vim
+			echo ":cs add ${PWD}/${dir_name}.out" >>load.vim
 		fi
 	done
 }
@@ -65,6 +65,7 @@ main()
 {
 	init
 	run
+    #echo "alias vims='vim -S ${PWD}/load.vim'" >> ~/.bashrc
 }
 
 
