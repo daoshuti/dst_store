@@ -28,21 +28,16 @@ endif
 filetype on
 filetype plugin indent on " 开启三个功能：文件类型检查、插件、缩进
 
-" Setting colorscheme
-"colorscheme industry " 配色主题的名称设置为industry
-set   background=dark " 配色主题的色系设置为dark
-
 " Other settings.
 set autoindent		" 创建新行自动缩进
+set cindent			" 开启针对c文件的缩进
+set smartindent	    " 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
 set autoread		" 文件在Vim之外修改过，自动重新读入
 set autowrite
 set backspace=indent,eol,start
-set nobackup
-set cindent			" 开启针对c文件的缩进
 set cinoptions=:0
 set cursorline		" 为光标所在行加下划线
 set completeopt=longest,menuone
-set noexpandtab
 set fileencodings=utf-8,gb2312,gbk,gb18030 " 使用utf-8或gbk等编码打开文件
 set fileformat=unix
 set foldenable
@@ -64,22 +59,23 @@ set laststatus=2      " 指定何时显示状态行
 set mouse=a         " 可以使用鼠标
 set number          " 显示行号
 set pumheight=10
-set ruler
+set ruler           "显示状态栏
 set scrolloff=5
-set shiftwidth=4
 set showcmd
-set smartindent	    " 开启智能缩进，它不像cindent那样完美支持c文件的缩进，但对于未知类型文件的缩进，还是有帮助的
 set smartcase
 set tabstop=4       " 制表符为4
-set expandtab       " 制表符替换为空格
-"set noexpandtab       " noexpand tabs into spaces  将tab不扩展成空格
+set noexpandtab     " 不把制表符替换为空格
+"set expandtab       " 制表符替换为空格
+set shiftwidth=0    "换行时使用0个空格，使用tab键风格时如此设置
+"set shiftwidth=4    "换行时使用4个空格
 set termencoding=utf-8
-"set textwidth=256   " 超过256个字符自动换行
 set whichwrap=h,l
 set wildignore=*.bak,*.o,*.e,*~
 set wildmenu
 set wildmode=list:longest,full
 set nowrap          " 禁止文字自动换行
+"set textwidth=256   " 超过256个字符自动换行
+set nobackup
 set noswapfile      " 不使用swapfile文件（不能灾难恢复）
 
 " gui settings
@@ -159,18 +155,22 @@ let mapleader=","
 nnoremap <space> :
 vnoremap <space> :
 " Switching between buffers.
-nnoremap <C-h> <C-W>h
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-l> <C-W>l
+"nnoremap <C-h> <C-W>h
+"nnoremap <C-j> <C-W>j
+"nnoremap <C-k> <C-W>k
+"nnoremap <C-l> <C-W>l
 " }}}1
 " PLUGINS SETTINGS:
 " {{{1
 
-" 管理vim配色
+" Setting background 设置vim背景颜色
+set   background=dark " 配色主题的色系设置为dark
 "set   background=light " 配色主题的色系设置为light
+
+" Setting colorscheme 设置vim配色主题
+"colorscheme industry " 配色主题的名称设置为industry
 "colorscheme solarized " 配色主题的名称设置为solarized
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 
 " Markdown插件
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown

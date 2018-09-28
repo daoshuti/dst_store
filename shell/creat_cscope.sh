@@ -55,7 +55,7 @@ run()
 					\) > ${PWD}/${dir_name}.files
 		cscope -bkq -i ${dir_name}.files -f ${dir_name}.out
 		if [ ${CHID_NUM} == 0 ];then
-			echo ":cs add ${PWD}/${dir_name}.out" >>load.vim
+			echo ":@cs add ${PWD}/${dir_name}.out" >load.vim
 		fi
 	done
 }
