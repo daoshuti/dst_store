@@ -380,6 +380,15 @@ nmap <leader>x :tabclose<cr>
 nmap <leader>] :tabn<cr>
 nmap <leader>[ :tabp<cr>
 
+" 折叠全文只留下查找结果
+" 先使用普通的/或者?进行查找，然后按下zf就进入视线折叠了
+" zO局部展开
+" zC重新折叠
+" zR快捷键恢复
+" zF目录结构恢复原状
+nnoremap zs :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>:set foldmethod=manual<CR><CR>
+nnoremap zS :set foldcolumn=0<CR>:set foldmethod=marker<CR><CR>
+
 " 添加tags文件(以便使用代码跳转和补全)
 "set tags+=/usr/include/tags
 "set tags+=./tags
