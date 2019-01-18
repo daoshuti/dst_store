@@ -1,4 +1,3 @@
-#!/bin/sh
 # Author: wanghan
 # Created Time : 2019年01月18日 星期五 16时01分19秒
 # File Name: cpu_monitor.sh
